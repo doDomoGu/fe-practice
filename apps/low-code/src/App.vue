@@ -1,5 +1,7 @@
 <script setup></script>
 
 <template>
-  <div>的撒大大</div>
+  <div>
+    <router-view></router-view>
+  </div>
 </template>
