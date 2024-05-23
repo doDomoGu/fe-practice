@@ -1,0 +1,21 @@
+{
+  "name": "@dodomogu/dev-configs",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "exports": {
+    "./prettier": "./src/prettier.config.mjs",
+    "./postcss": "./src/postcss.config.js",
+    "./tailwind": "./src/tailwind.config.js",
+    "./tailwind.css": "./src/tailwind.css"
+  },
+  "devDependencies": {
+    "@radix-ui/colors": "^3.0.0"
+  }
+}

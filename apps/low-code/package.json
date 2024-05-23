@@ -1,0 +1,21 @@
+{
+  "name": "@dodomogu/low-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@dodomogu/dev-configs": "workspace:^",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "vite": "^5.2.11"
+  },
+  "dependencies": {
+    "vue": "^3.4.27"
+  }
+}
