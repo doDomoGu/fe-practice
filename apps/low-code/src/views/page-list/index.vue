@@ -1,5 +1,5 @@
 <script setup></script>
 
 <template>
-  <div>SSR</div>
+  <div>page list</div>
 </template>

@@ -6,7 +6,7 @@ import router from './router'
 // import DvUI from '@data-visualization/ui'
 // import DvEcharts from '@data-visualization/echarts'
 
-// import '@data-visualization/configs/tailwind.css'
+import '@dodomogu/dev-configs/tailwind.css'
 
 const app = createApp(App)
 

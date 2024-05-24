@@ -5,11 +5,23 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/views/Home.vue')
+      name: 'pageList',
+      component: () => import('@/views/page-list')
     },
     {
-      path: '/ssr',
-      component: () => import('@/views/Ssr.vue')
+      path: '/editor/:id',
+      name: 'editor',
+      component: () => import('@/views/editor')
+    },
+    {
+      path: '/editor/preview/:id',
+      name: 'editorPreview',
+      component: () => import('@/views/editor-preview')
+    },
+    {
+      path: '/champion',
+      name: 'champion',
+      component: () => import('@/views/Champion')
     }
   ]
 })
