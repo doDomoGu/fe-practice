@@ -1,7 +1,3 @@
-<script setup></script>
-
 <template>
-  <div>
-    <router-view></router-view>
-  </div>
+  <router-view />
 </template>
