@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="h-full w-full flex flex-col">
     <div class="text-xl font-bold text-white m-4">页面列表</div>
     <div class="flex flex-wrap justify-start gap-4 mx-4">
       <router-link

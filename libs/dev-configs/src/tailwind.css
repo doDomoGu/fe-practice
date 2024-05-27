@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-body-bg text-body-text dark:bg-body-bg-dark dark:text-body-text-dark w-full h-full;
+*::-webkit-scrollbar {
+  @apply hidden;
+}
+#app {
+  @apply bg-app-bg text-app-text dark:bg-app-bg-dark dark:text-app-text-dark w-screen h-screen;
 }

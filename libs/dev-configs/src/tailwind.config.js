@@ -9,10 +9,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'body-bg': '#ffffff',
-        'body-text': '#333333',
-        'body-bg-dark': '#273444',
-        'body-text-dark': '#ffffff'
+        'app-bg': '#ffffff',
+        'app-text': '#333333',
+        'app-bg-dark': '#273444',
+        'app-text-dark': '#ffffff'
       },
       fontFamily: {
         text: 'PingFang',
