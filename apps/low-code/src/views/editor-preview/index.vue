@@ -26,7 +26,7 @@ onMounted(() => {
 window.parent.postMessage({ type: 'from-editor-preview' }, '*')
 
 // const data = computed(() => localstore.get('content'))
-const contentData = ref(null)
+const contentData = ref([])
 const init = (data) => {
   contentData.value = data
 }
