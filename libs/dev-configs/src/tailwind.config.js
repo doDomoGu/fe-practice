@@ -3,7 +3,7 @@ const path = require('path')
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{html,js,vue}'
+    './src/**/*.{html,js,vue,tsx,ts,jsx}'
     // path.join(path.dirname(require.resolve('@data-visualization/ui')), './src/**/*.{html,js,vue}')
   ],
   theme: {
