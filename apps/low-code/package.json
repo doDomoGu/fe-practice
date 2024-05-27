@@ -20,7 +20,10 @@
     "vite": "^5.2.11"
   },
   "dependencies": {
+    "@dodomogu/localstore": "workspace:^",
+    "@vueuse/core": "^10.9.0",
     "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   }
