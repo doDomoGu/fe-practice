@@ -1,12 +1,13 @@
 <script setup>
 import { onMounted, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-// import { CreateLocalStore } from '@dodomogu/localstore'
+import { CreateLocalStore } from '@dodomogu/localstore'
+import { v4 as uuidv4 } from 'uuid'
 
 const route = useRoute()
-// const localstore = new CreateLocalStore(`editor-${route.params.id}`, [])
+const localstore = new CreateLocalStore(`editor-${route.params.id}`, [])
 
-let parent = null
+// let parent = null
 onMounted(() => {
   console.log('iframe onmounted')
   window.addEventListener('message', (e) => {
@@ -31,13 +32,29 @@ const init = (data) => {
   contentData.value = data
 }
 const addControl = (item) => {
+  item.uuid = uuidv4()
+
+  localstore.push('content', item)
   contentData.value.push(item)
 }
+// const s = {
+//   id: 'text1',
+//   icon: '/src/views/editor/controls/icons/text.svg',
+//   title: '文本组件',
+//   limit: 50,
+//   uuid: '4596752b-554b-40b5-a1dc-904d5ac58265'
+// }
 </script>
 
 <template>
   <div class="w-full h-full overflow-auto">
-    <div>editor-preview id: {{ route.params.id }}</div>
-    <div>{{ contentData }}</div>
+    <div>
+      <template v-for="item in contentData" :key="item.uuid">
+        <div>
+          <div>{{ item.title }} (uuid: {{ item.uuid }})</div>
+          <div>{{ item.id }} / {{ item.componentName }}</div>
+        </div>
+      </template>
+    </div>
   </div>
 </template>

@@ -2,27 +2,27 @@ import TextIcon from './icons/text.svg'
 
 export default [
   {
-    id: 'text',
+    id: 'title-text',
     icon: TextIcon,
-    title: '文本组件',
+    componentName: '标题文本',
     limit: 50
   },
   {
-    id: 'text1',
+    id: 'text111',
     icon: TextIcon,
-    title: '文本组件',
+    componentName: '标题文本111',
     limit: 50
   },
   {
-    id: 'text2',
+    id: 'text2222',
     icon: TextIcon,
-    title: '文本组件',
+    componentName: '标题文本2222',
     limit: 50
   },
   {
-    id: 'text3',
+    id: 'text3333',
     icon: TextIcon,
-    title: '文本组件',
+    componentName: '标题文本333',
     limit: 50
   }
 ]
