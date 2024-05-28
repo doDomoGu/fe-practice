@@ -4,7 +4,7 @@ import Projects from '@/pages/projects'
 import Editor from '@/pages/editor'
 import Preview from '@/pages/preview'
 // import RecommendList from '../pages/home/tabs/recommendList'
-console.log({ ss: Editor() })
+
 export interface MyRouteObject {
   title?: string
 }
@@ -25,13 +25,13 @@ export const router: Array<MyRouter> = [
     // ]
   },
   {
-    path: '/editor',
+    path: '/editor/:id',
     element: <Editor />,
     title: '编辑器'
     // children: [{ path: 'learning', element: <div>教育</div> }]
   },
   {
-    path: '/preview',
+    path: 'preview/:id',
     element: <Preview />,
     title: '预览'
   }

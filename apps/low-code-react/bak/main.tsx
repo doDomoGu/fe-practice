@@ -1,12 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+// import App from './App'
 
 import '@dodomogu/dev-configs/tailwind.css'
-// import './index.css'
+
+function App() {
+  return <div>ssss333ss</div>
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App></App>
+  // </React.StrictMode>
 )
