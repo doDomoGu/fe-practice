@@ -8,11 +8,15 @@ import router from './router'
 
 import '@dodomogu/dev-configs/tailwind.css'
 
+import { setupControlComponents } from './control-components'
+
 const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
 // app.use(DvUI)
 // app.use(DvEcharts)
+
+setupControlComponents(app)
 
 app.mount('#app')

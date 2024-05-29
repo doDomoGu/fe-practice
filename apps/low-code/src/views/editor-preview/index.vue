@@ -48,11 +48,10 @@ const addControl = (item) => {
 
 <template>
   <div class="w-full h-full overflow-auto">
-    <div>
+    <div class="bg-white w-[750px] h-[800px] overflow-auto mx-auto mt-4 p-4">
       <template v-for="item in contentData" :key="item.uuid">
-        <div>
-          <div>{{ item.title }} (uuid: {{ item.uuid }})</div>
-          <div>{{ item.id }} / {{ item.componentName }}</div>
+        <div class="w-[320px] h-[160px] border text-black">
+          <component :is="item.id" :data="item" />
         </div>
       </template>
     </div>

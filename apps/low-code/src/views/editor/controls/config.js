@@ -8,9 +8,9 @@ export default [
     limit: 50
   },
   {
-    id: 'text111',
+    id: 'input-text',
     icon: TextIcon,
-    componentName: '标题文本111',
+    componentName: '文本输入框',
     limit: 50
   },
   {
