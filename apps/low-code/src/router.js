@@ -6,22 +6,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'pageList',
+      meta: {
+        title: '项目列表'
+      },
       component: () => import('@/views/page-list')
     },
     {
       path: '/editor/:id',
       name: 'editor',
+      meta: {
+        title: '编辑器'
+      },
       component: () => import('@/views/editor')
     },
     {
       path: '/editor/preview/:id',
       name: 'editorPreview',
+      meta: {
+        title: '编辑器预览页'
+      },
       component: () => import('@/views/editor-preview')
-    },
-    {
-      path: '/champion',
-      name: 'champion',
-      component: () => import('@/views/Champion')
     }
   ]
 })
