@@ -3,10 +3,15 @@ import { onMounted, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { CreateLocalStore } from '@dodomogu/localstore'
 import { v4 as uuidv4 } from 'uuid'
+import useStore from '@/store/editor'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 const localstore = new CreateLocalStore(`editor-${route.params.id}`, [])
 
+const store = useStore()
+
+const { currentControl } = storeToRefs(store)
 // let parent = null
 onMounted(() => {
   console.log('iframe onmounted')
@@ -44,13 +49,24 @@ const addControl = (item) => {
 //   limit: 50,
 //   uuid: '4596752b-554b-40b5-a1dc-904d5ac58265'
 // }
+
+const handleItemSelect = (item) => {
+  console.log('select item', item)
+  window.parent.postMessage({ type: 'select-item', data: item.uuid }, '*')
+
+  store.setCurrentControl(item.uuid)
+}
 </script>
 
 <template>
   <div class="w-full h-full overflow-auto">
     <div class="bg-white w-[750px] h-[800px] overflow-auto mx-auto mt-4 p-4">
       <template v-for="item in contentData" :key="item.uuid">
-        <div class="w-[320px] h-[160px] border text-black">
+        <div
+          class="w-[320px] h-[160px] border text-black"
+          :class="currentControl === item.uuid ? 'bg-blue-100' : ''"
+          @click.stop="handleItemSelect(item)"
+        >
           <component :is="item.id" :data="item" />
         </div>
       </template>

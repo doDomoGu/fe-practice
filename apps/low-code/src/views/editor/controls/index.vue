@@ -18,11 +18,15 @@ const route = useRoute()
 // const { controlsCount, addControlsCount } = useStore()
 
 const localstore = new CreateLocalStore(`editor-${route.params.id}`, [])
-const componentCount = reactive({ data: localstore.get('componentCount') || {} })
+const componentCount = reactive({
+  data: localstore.get('componentCount') || {}
+})
 const handleAddControl = (item) => {
   // addControlsCount(item.id)
   const _componentCount = localstore.get('componentCount') || {}
-  _componentCount[item.id] = _componentCount[item.id] ? _componentCount[item.id] + 1 : 1
+  _componentCount[item.id] = _componentCount[item.id]
+    ? _componentCount[item.id] + 1
+    : 1
 
   componentCount.data = _componentCount
   localstore.set('componentCount', _componentCount)
@@ -41,7 +45,9 @@ const componentCount2 = computed(() => localstore.get('componentCount') || {})
 
 <template>
   <div class="w-[250px] bg-gray-200 text-black h-full flex flex-col">
-    <div class="flex-none h-[30px] items-center px-2 bg-gray-700 text-gray-400 text-center">
+    <div
+      class="flex-none h-[30px] items-center px-2 bg-gray-700 text-gray-400 text-center"
+    >
       控件区
       <button @click="handleClear">清空</button>
       <!-- {{ localstore.get('content') }} -->

@@ -9,6 +9,10 @@ import EditorMainControls from './controls'
 import EditorMainSettings from './settings'
 
 import { CreateLocalStore } from '@dodomogu/localstore'
+
+import useStore from '@/store/editor'
+const { setCurrentControl } = useStore()
+
 const route = useRoute()
 
 const localstore = new CreateLocalStore(`editor-${route.params.id}`, [])
@@ -35,6 +39,10 @@ eventBus.on((e) => {
 
 window.addEventListener('message', (event) => {
   console.log('received', event.data)
+  if (event.data.type === 'select-item') {
+    // localstore.set('content', event.data.data)
+    setCurrentControl(event.data.data)
+  }
 })
 </script>
 

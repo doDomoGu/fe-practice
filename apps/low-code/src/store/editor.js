@@ -12,5 +12,11 @@ export default defineStore('Editor', () => {
     }
   }
 
-  return { controlsCount, addControlsCount }
+  const currentControl = ref(null)
+
+  function setCurrentControl(control) {
+    currentControl.value = control
+  }
+
+  return { controlsCount, addControlsCount, currentControl, setCurrentControl }
 })
