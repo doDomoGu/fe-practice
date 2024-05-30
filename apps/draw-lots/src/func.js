@@ -54,8 +54,9 @@ const drawOneLot = (teams) => {
   let success = false
 
   for (let v of ['h1', 'a1', 'h2', 'a2', 'h3', 'a3', 'h4', 'a4']) {
-    if (oriTeam.opponents[v] == null) {
-      const restLen = oriTeam.restOppoLots[v].length
+    const restLen = oriTeam.restOppoLots[v].length
+    if (oriTeam.opponents[v] == null && restLen > 0) {
+      
       const restRandomIdx = Math.ceil(Math.random() * restLen)
       console.log('restRandomIdx', restRandomIdx, restLen, oriTeam.restOppoLots[v])
       const targetTeamOrd = oriTeam.restOppoLots[v][restRandomIdx - 1]
@@ -76,6 +77,7 @@ const drawOneLot = (teams) => {
         targetTeam.opponents[targetV] == null &&
         targetTeam.restOppoLots[targetV].indexOf(oriTeam.ord) > -1
       ) {
+        oriTeam.restOppoLots[v] = []
         // oriTeam.restOppoLots[v].splice(restRandomIdx, 1)
         oriTeam.opponents[v] = {
           ord: targetTeam.ord,
@@ -88,6 +90,7 @@ const drawOneLot = (teams) => {
         //   targetTeam.restOppoLots[targetV].indexOf(oriTeam.ord),
         //   1
         // )
+        targetTeam.restOppoLots[targetV] = []
         targetTeam.opponents[targetV] = {
           ord: oriTeam.ord,
           uuid: oriTeam.uuid,
