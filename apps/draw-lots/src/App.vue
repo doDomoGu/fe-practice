@@ -1,18 +1,17 @@
 <script setup>
 import TeamItem from './components/TeamItem.vue'
-import generateTeams from './generateTeams'
+import { generateTeams, drawOneLot } from './func.js'
 
 const teams = generateTeams()
+
+drawOneLot(teams)
+
 console.log(teams)
 </script>
 <template>
   <div>
     <div class="flex flex-wrap">
-      <div
-        v-for="team in teams"
-        :key="team.id"
-        class="w-[300px] h-[200px] m-2 border"
-      >
+      <div v-for="team in teams" :key="team.id" class="w-[420px] h-auto m-2 border">
         <TeamItem :team="team" />
       </div>
     </div>
