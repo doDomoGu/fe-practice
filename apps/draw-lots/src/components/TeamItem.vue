@@ -11,7 +11,7 @@ const props = defineProps({
 <template>
   <div>
     <div :style="{ background: `#${team.uuid}` }">
-      {{ team.name }}
+      {{ team.name }} | {{ team.level }} | {{ team.ord }}
     </div>
     <Opponents :data="team.opponents" :rest="team.restOppoLots" />
   </div>
