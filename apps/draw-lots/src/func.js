@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid'
 
-const debugLevel = 'h2'
+const debugLevel = ''
 
-const levelCount = 2
+const levelCount = 4
 
 const opponentTypeList = ((levelCount) => {
   let list = []
@@ -13,7 +13,7 @@ const opponentTypeList = ((levelCount) => {
   return list
 })(levelCount)
 
-const eachLevelTeamCount = 4
+const eachLevelTeamCount = 9
 
 const teamTotalCount = levelCount * eachLevelTeamCount
 
@@ -83,6 +83,89 @@ const generateTeams = () => {
   return teams
 }
 
+function intersection(...arrays) {
+  if (arrays.length === 0) return []
+
+  let result = arrays.shift()
+
+  while (arrays.length > 0) {
+    result = result.filter((value) => arrays.shift().includes(value))
+  }
+
+  return result
+}
+
+function forceLotsWhenRest3(teams, type, level) {
+  function getOppoObj(team) {
+    return {
+      ord: team.ord,
+      uuid: team.uuid,
+      name: team.name,
+      level: team.level
+    }
+  }
+  const restTeams = []
+  for (
+    let i = (level - 1) * eachLevelTeamCount;
+    i < level * eachLevelTeamCount;
+    i++
+  ) {
+    if (teams[i].opponents['h' + level] == null) {
+      console.log('rest3 - h', teams[i])
+      // restTeams.push(teams[i])
+    }
+
+    if (teams[i].opponents['a' + level] == null) {
+      console.log('rest3 - a', teams[i])
+      // restTeams.push(teams[i])
+    }
+  }
+
+  // if (restTeams.length == 3) {
+  //   // const targetType = (oriType[0] == 'h' ? 'a' : 'h') + level
+
+  //   const team1 = restTeams[0]
+
+  //   const team2 = restTeams[1]
+
+  //   const team3 = restTeams[2]
+
+  //   const team1H1OppoOrd = [2, 3][Math.floor(Math.random() * 2)]
+
+  //   const hType = 'h' + level
+  //   const aType = 'a' + level
+  //   if (team1H1OppoOrd == 2) {
+  //     team1.opponents[hType] = getOppoObj(team2)
+  //     team1.opponents[aType] = getOppoObj(team3)
+
+  //     team2.opponents[hType] = getOppoObj(team3)
+  //     team2.opponents[aType] = getOppoObj(team1)
+
+  //     team3.opponents[hType] = getOppoObj(team1)
+  //     team3.opponents[aType] = getOppoObj(team2)
+  //   } else {
+  //     // if(team1H1OppoOrd == 3)
+
+  //     team1.opponents[hType] = getOppoObj(team3)
+  //     team1.opponents[aType] = getOppoObj(team2)
+
+  //     team2.opponents[hType] = getOppoObj(team1)
+  //     team2.opponents[aType] = getOppoObj(team3)
+
+  //     team3.opponents[hType] = getOppoObj(team2)
+  //     team3.opponents[aType] = getOppoObj(team1)
+  //   }
+
+  //   team1.restOppoLots[hType] = []
+  //   team1.restOppoLots[aType] = []
+  //   team2.restOppoLots[hType] = []
+  //   team2.restOppoLots[aType] = []
+  //   team3.restOppoLots[hType] = []
+  //   team3.restOppoLots[aType] = []
+
+  // }
+}
+
 const drawOneLot2 = (teams) => {
   console.log('drawOneLot2 ===== start =====')
   let successTime = 0
@@ -93,14 +176,16 @@ const drawOneLot2 = (teams) => {
     teamsOrd.push(i)
   }
 
-  // shuffleArray(teamsOrd)
+  shuffleArray(teamsOrd)
   console.log('teamsOrd', teamsOrd)
-  for (let teamOrd of teamsOrd) {
-    const oriTeam = teams[teamOrd]
-    console.log('=====oriTeam=====', ++teamCount, oriTeam)
-    const oriLevel = oriTeam.level
-    // 依次遍历8种需要对阵的对手的种类 (h1:主场对阵的level1球队, a1:客场对阵的level1球队...)
-    for (let oriType of opponentTypeList) {
+
+  // 依次遍历8种需要对阵的对手的种类 (h1:主场对阵的level1球队, a1:客场对阵的level1球队...)
+  for (let oriType of opponentTypeList) {
+    for (let teamOrd of teamsOrd) {
+      const oriTeam = teams[teamOrd]
+      console.log('=====oriTeam=====', ++teamCount, oriTeam)
+      const oriLevel = oriTeam.level
+
       console.log('oriType', oriType, 'isHas', oriTeam.opponents[oriType])
       // 如果该种类的已经找到对手，则跳过
       if (oriTeam.opponents[oriType] != null) continue
@@ -149,7 +234,18 @@ const drawOneLot2 = (teams) => {
         }
         // console.log('teams[i].restOppoLots[oriType]', JSON.parse(teams[i].restOppoLots[oriType]))
 
-        console.log('=== start 150 ====')
+        // 同一level 补充 不能再抽到
+        if (targetLevel == oriLevel) {
+          oriTeam.restOppoLots[targetType] = oriTeam.restOppoLots[
+            targetType
+          ].filter((v) => v !== targetTeam.ord)
+
+          targetTeam.restOppoLots[oriType] = targetTeam.restOppoLots[
+            oriType
+          ].filter((v) => v !== oriTeam.ord)
+        }
+
+        console.log('=== start 173 ====')
         // for (let i = 0; i < teamTotalCount; i++) {
 
         for (
@@ -157,6 +253,13 @@ const drawOneLot2 = (teams) => {
           i < oriLevel * eachLevelTeamCount;
           i++
         ) {
+          // if (oriType == debugLevel) {
+          //   console.warn(
+          //     `teams[${i}].restOppoLots[${debugLevel}] - 1111`,
+          //     `filter ${targetTeam.ord}`,
+          //     [...teams[i].restOppoLots[oriType]]
+          //   )
+          // }
           teams[i].restOppoLots[oriType] = teams[i].restOppoLots[
             oriType
           ].filter((v) => v !== targetTeam.ord)
@@ -167,7 +270,7 @@ const drawOneLot2 = (teams) => {
 
           if (oriType == debugLevel) {
             console.warn(
-              `teams[${i}].restOppoLots[${debugLevel}]`,
+              `teams[${i}].restOppoLots[${debugLevel}] - 2222`,
               `filter ${targetTeam.ord}`,
               [...teams[i].restOppoLots[oriType]]
             )
@@ -181,17 +284,28 @@ const drawOneLot2 = (teams) => {
           i < targetLevel * eachLevelTeamCount;
           i++
         ) {
+          // if (targetType == debugLevel) {
+          //   console.warn(
+          //     `teams[${i}].restOppoLots[${debugLevel}] 1111`,
+          //     `filter ${oriTeam.ord}`,
+          //     [...teams[i].restOppoLots[targetType]]
+          //   )
+          // }
           teams[i].restOppoLots[targetType] = teams[i].restOppoLots[
             targetType
           ].filter((v) => v !== oriTeam.ord)
           if (targetType == debugLevel) {
             console.warn(
-              `teams[${i}].restOppoLots[${debugLevel}]`,
+              `teams[${i}].restOppoLots[${debugLevel}] 222`,
               `filter ${oriTeam.ord}`,
               [...teams[i].restOppoLots[targetType]]
             )
           }
         }
+
+        //  检测 同一个level 是否只剩三支队伍没有匹配
+        //  oriLevel oriType
+        // forceLotsWhenRest3(teams, oriType, oriLevel)
 
         // console.log('teams[i].restOppoLots[oriType]', oriType, [
         //   ...teams[i].restOppoLots[oriType]
