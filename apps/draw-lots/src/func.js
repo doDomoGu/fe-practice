@@ -1,8 +1,25 @@
 import { v4 as uuidv4 } from 'uuid'
 
+const debugLevel = 'h2'
+
+const levelCount = 2
+
+const opponentTypeList = ((levelCount) => {
+  let list = []
+  for (let i = 1; i <= levelCount; i++) {
+    list.push('h' + i)
+    list.push('a' + i)
+  }
+  return list
+})(levelCount)
+
+const eachLevelTeamCount = 4
+
+const teamTotalCount = levelCount * eachLevelTeamCount
+
 const initRestOppoLots = (start, cur) => {
   const ret = []
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < eachLevelTeamCount; i++) {
     if (start + i === cur) continue
     ret.push(start + i)
   }
@@ -19,39 +36,179 @@ function shuffleArray(array) {
 
 const generateTeams = () => {
   const teams = []
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 9; j++) {
+  for (let i = 0; i < levelCount; i++) {
+    for (let j = 0; j < eachLevelTeamCount; j++) {
       const uuid = uuidv4().slice(0, 6)
-      const ord = i * 9 + j // ord 从0开始，35结束
-      teams.push({
+      const ord = i * eachLevelTeamCount + j // ord 从0开始，35结束
+
+      const tItem = {
         ord,
         uuid,
         name: `Team - ${uuid}`,
         level: i + 1,
-        opponents: {
-          h1: null,
-          a1: null,
-          h2: null,
-          a2: null,
-          h3: null,
-          a3: null,
-          h4: null,
-          a4: null
-        },
-        restOppoLots: {
-          h1: initRestOppoLots(0, ord),
-          a1: initRestOppoLots(0, ord),
-          h2: initRestOppoLots(9, ord),
-          a2: initRestOppoLots(9, ord),
-          h3: initRestOppoLots(18, ord),
-          a3: initRestOppoLots(18, ord),
-          h4: initRestOppoLots(27, ord),
-          a4: initRestOppoLots(27, ord)
-        }
+        opponents: {},
+        restOppoLots: {}
+        // opponents: {
+        //   h1: null,
+        //   a1: null,
+        //   h2: null,
+        //   a2: null,
+        //   h3: null,
+        //   a3: null,
+        //   h4: null,
+        //   a4: null
+        // },
+        // restOppoLots: {
+        //   h1: initRestOppoLots(0, ord),
+        //   a1: initRestOppoLots(0, ord),
+        //   h2: initRestOppoLots(1 * eachLevelTeamCount, ord),
+        //   a2: initRestOppoLots(1 * eachLevelTeamCount, ord),
+        //   h3: initRestOppoLots(2 * eachLevelTeamCount, ord),
+        //   a3: initRestOppoLots(2 * eachLevelTeamCount, ord),
+        //   h4: initRestOppoLots(3 * eachLevelTeamCount, ord),
+        //   a4: initRestOppoLots(3 * eachLevelTeamCount, ord)
+        // }
+      }
+      opponentTypeList.forEach((v) => {
+        tItem.opponents[v] = null
+        tItem.restOppoLots[v] = initRestOppoLots(
+          (v[1] - 1) * eachLevelTeamCount,
+          ord
+        )
       })
+
+      teams.push(tItem)
     }
   }
   return teams
+}
+
+const drawOneLot2 = (teams) => {
+  console.log('drawOneLot2 ===== start =====')
+  let successTime = 0
+
+  let teamCount = 0
+  let teamsOrd = []
+  for (let i = 0; i < teamTotalCount; i++) {
+    teamsOrd.push(i)
+  }
+
+  // shuffleArray(teamsOrd)
+  console.log('teamsOrd', teamsOrd)
+  for (let teamOrd of teamsOrd) {
+    const oriTeam = teams[teamOrd]
+    console.log('=====oriTeam=====', ++teamCount, oriTeam)
+    const oriLevel = oriTeam.level
+    // 依次遍历8种需要对阵的对手的种类 (h1:主场对阵的level1球队, a1:客场对阵的level1球队...)
+    for (let oriType of opponentTypeList) {
+      console.log('oriType', oriType, 'isHas', oriTeam.opponents[oriType])
+      // 如果该种类的已经找到对手，则跳过
+      if (oriTeam.opponents[oriType] != null) continue
+
+      const oppoListCopy = [...oriTeam.restOppoLots[oriType]]
+
+      shuffleArray(oppoListCopy)
+
+      const targetType = (oriType[0] == 'h' ? 'a' : 'h') + oriTeam.level
+
+      console.log('oppoListCopy', oppoListCopy, targetType)
+
+      for (let targetTeamOrd of oppoListCopy) {
+        const targetTeam = teams[targetTeamOrd]
+        console.log('targetTeam', targetTeam, 'targetTeamOrd', targetTeamOrd)
+        const targetLevel = targetTeam.level
+        // 对手对应的targetType类型的对手已经有了  就跳过
+        if (targetTeam.opponents[targetType] != null) continue
+
+        if (oriType == debugLevel) {
+          console.warn(`oriType=${debugLevel}`, oriTeam)
+        }
+        oriTeam.restOppoLots[oriType] = []
+        // oriTeam.restOppoLots[oriType].splice(restRandomIdx, 1)
+        oriTeam.opponents[oriType] = {
+          ord: targetTeam.ord,
+          uuid: targetTeam.uuid,
+          name: targetTeam.name,
+          level: targetTeam.level
+        }
+
+        // targetTeam.restOppoLots[targetType].splice(
+        //   targetTeam.restOppoLots[targetType].indexOf(oriTeam.ord),
+        //   1
+        // )
+        if (targetType == debugLevel) {
+          console.warn(`targetType=${debugLevel}`, targetTeam)
+        }
+
+        targetTeam.restOppoLots[targetType] = []
+        targetTeam.opponents[targetType] = {
+          ord: oriTeam.ord,
+          uuid: oriTeam.uuid,
+          name: oriTeam.name,
+          level: oriTeam.level
+        }
+        // console.log('teams[i].restOppoLots[oriType]', JSON.parse(teams[i].restOppoLots[oriType]))
+
+        console.log('=== start 150 ====')
+        // for (let i = 0; i < teamTotalCount; i++) {
+
+        for (
+          let i = (oriLevel - 1) * eachLevelTeamCount;
+          i < oriLevel * eachLevelTeamCount;
+          i++
+        ) {
+          teams[i].restOppoLots[oriType] = teams[i].restOppoLots[
+            oriType
+          ].filter((v) => v !== targetTeam.ord)
+
+          // console.log('teams[i].restOppoLots[oriType]222', oriType, [
+          //   ...teams[i].restOppoLots[oriType]
+          // ])
+
+          if (oriType == debugLevel) {
+            console.warn(
+              `teams[${i}].restOppoLots[${debugLevel}]`,
+              `filter ${targetTeam.ord}`,
+              [...teams[i].restOppoLots[oriType]]
+            )
+          }
+        }
+        // console.log('teams[i].restOppoLots[targetType]', targetType, [
+        //   ...teams[i].restOppoLots[targetType]
+        // ])
+        for (
+          let i = (targetLevel - 1) * eachLevelTeamCount;
+          i < targetLevel * eachLevelTeamCount;
+          i++
+        ) {
+          teams[i].restOppoLots[targetType] = teams[i].restOppoLots[
+            targetType
+          ].filter((v) => v !== oriTeam.ord)
+          if (targetType == debugLevel) {
+            console.warn(
+              `teams[${i}].restOppoLots[${debugLevel}]`,
+              `filter ${oriTeam.ord}`,
+              [...teams[i].restOppoLots[targetType]]
+            )
+          }
+        }
+
+        // console.log('teams[i].restOppoLots[oriType]', oriType, [
+        //   ...teams[i].restOppoLots[oriType]
+        // ])
+
+        // }
+        console.log('success', oriTeam.ord, targetTeam.ord)
+        console.log(' ')
+        successTime++
+        break
+      }
+    }
+  }
+
+  console.log('drawOneLot2 ===== end =====' + successTime)
+  console.log('  ')
+  return successTime
 }
 
 const drawOneLot = (teams) => {
@@ -60,11 +217,11 @@ const drawOneLot = (teams) => {
   let successTime = 0
   try {
     // 从36支球队随机选择一支球队
-    const oriTeam = teams[Math.floor(Math.random() * 36)]
+    const oriTeam = teams[Math.floor(Math.random() * teamTotalCount)]
     console.log('oriTeam', oriTeam)
 
     // 依次遍历8种需要对阵的对手的种类 (h1:主场对阵的level1球队, a1:客场对阵的level1球队...)
-    for (let oriType of ['h1', 'a1', 'h2', 'a2', 'h3', 'a3', 'h4', 'a4']) {
+    for (let oriType of opponentTypeList) {
       console.log('oriType', oriType)
       // 如果该种类的已经找到对手，则跳过
       if (oriTeam.opponents[oriType] != null) continue
@@ -138,7 +295,7 @@ const drawOneLot = (teams) => {
         }
         // console.log('teams[i].restOppoLots[oriType]', JSON.parse(teams[i].restOppoLots[oriType]))
 
-        for (let i = 0; i < 36; i++) {
+        for (let i = 0; i < teamTotalCount; i++) {
           console.log('teams[i].restOppoLots[targetType]', targetType, [
             ...teams[i].restOppoLots[targetType]
           ])
@@ -176,4 +333,4 @@ const drawOneLot = (teams) => {
   return successTime
 }
 
-export { generateTeams, drawOneLot }
+export { generateTeams, drawOneLot, drawOneLot2, opponentTypeList }
