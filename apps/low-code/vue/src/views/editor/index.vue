@@ -8,7 +8,7 @@ import EditorMainContent from './content'
 import EditorMainControls from './controls'
 import EditorMainSettings from './settings'
 
-import { CreateLocalStore } from '@dodomogu/localStore'
+import { CreateLocalStore } from '@dodomogu/localstore'
 
 import useStore from '@/store/editor'
 
@@ -18,12 +18,11 @@ const route = useRoute()
 
 const editorStore = new CreateLocalStore(`editor-${route.params.id}`)
 
-const eventBus = useEventBus('editor')
-
 let editorPreviewIframe = null
 
 // 发送数据给"画布预览"页面, 用于初始化状态
 onMounted(() => {
+  console.log('onMounted', document.getElementById('editor-preview'))
   editorPreviewIframe = document.getElementById('editor-preview')
   setTimeout(() => {
     console.log('onload', 'postmessage')
@@ -34,10 +33,14 @@ onMounted(() => {
   }, 500)
 })
 
+// editor 的事件总线
+const eventBus = useEventBus('editor')
+
 eventBus.on((e) => {
   editorPreviewIframe.contentWindow.postMessage(e, '*')
 })
 
+// 接收 editorPreview的message
 window.addEventListener('message', (event) => {
   console.log('received', event.data)
   if (event.data.type === 'select-item') {
