@@ -1,5 +1,5 @@
 {
-  "name": "@dodomogu/low-code-react",
+  "name": "@dodomogu/japanese-learning_vue",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,18 +12,19 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "@types/react-router-dom": "^5.3.3",
+    "@dodomogu/dev-configs": "workspace:^",
+    "@vitejs/plugin-vue": "^5.0.4",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.11"
   },
   "dependencies": {
-    "@vitejs/plugin-react": "^4.3.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1"
+    "@dodomogu/localstore": "workspace:^",
+    "@vueuse/core": "^10.9.0",
+    "pinia": "^2.1.7",
+    "uuid": "^9.0.1",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
   }
 }

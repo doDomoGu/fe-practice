@@ -59,47 +59,7 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11
 
-  apps/japanese-learning:
-    dependencies:
-      '@dodomogu/localstore':
-        specifier: workspace:^
-        version: link:../../libs/localstore
-      '@vueuse/core':
-        specifier: ^10.9.0
-        version: 10.9.0(vue@3.4.27)
-      pinia:
-        specifier: ^2.1.7
-        version: 2.1.7(vue@3.4.27)
-      uuid:
-        specifier: ^9.0.1
-        version: 9.0.1
-      vue:
-        specifier: ^3.4.27
-        version: 3.4.27
-      vue-router:
-        specifier: ^4.3.2
-        version: 4.3.2(vue@3.4.27)
-    devDependencies:
-      '@dodomogu/dev-configs':
-        specifier: workspace:^
-        version: link:../../libs/dev-configs
-      '@vitejs/plugin-vue':
-        specifier: ^5.0.4
-        version: 5.0.4(vite@5.2.11)(vue@3.4.27)
-      autoprefixer:
-        specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.38)
-      postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.3
-      vite:
-        specifier: ^5.2.11
-        version: 5.2.11
-
-  apps/japanese-learning-react:
+  apps/japanese-learning/react:
     dependencies:
       '@vitejs/plugin-react':
         specifier: ^4.3.0
@@ -136,11 +96,11 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11
 
-  apps/low-code:
+  apps/japanese-learning/vue:
     dependencies:
       '@dodomogu/localstore':
         specifier: workspace:^
-        version: link:../../libs/localstore
+        version: link:../../../libs/localstore
       '@vueuse/core':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.27)
@@ -159,7 +119,7 @@ importers:
     devDependencies:
       '@dodomogu/dev-configs':
         specifier: workspace:^
-        version: link:../../libs/dev-configs
+        version: link:../../../libs/dev-configs
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.2.11)(vue@3.4.27)
@@ -176,7 +136,7 @@ importers:
         specifier: ^5.2.11
         version: 5.2.11
 
-  apps/low-code-react:
+  apps/low-code/react:
     dependencies:
       '@vitejs/plugin-react':
         specifier: ^4.3.0
@@ -200,6 +160,46 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
+      autoprefixer:
+        specifier: ^10.4.19
+        version: 10.4.19(postcss@8.4.38)
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      tailwindcss:
+        specifier: ^3.4.3
+        version: 3.4.3
+      vite:
+        specifier: ^5.2.11
+        version: 5.2.11
+
+  apps/low-code/vue:
+    dependencies:
+      '@dodomogu/localstore':
+        specifier: workspace:^
+        version: link:../../../libs/localstore
+      '@vueuse/core':
+        specifier: ^10.9.0
+        version: 10.9.0(vue@3.4.27)
+      pinia:
+        specifier: ^2.1.7
+        version: 2.1.7(vue@3.4.27)
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
+      vue:
+        specifier: ^3.4.27
+        version: 3.4.27
+      vue-router:
+        specifier: ^4.3.2
+        version: 4.3.2(vue@3.4.27)
+    devDependencies:
+      '@dodomogu/dev-configs':
+        specifier: workspace:^
+        version: link:../../../libs/dev-configs
+      '@vitejs/plugin-vue':
+        specifier: ^5.0.4
+        version: 5.0.4(vite@5.2.11)(vue@3.4.27)
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -285,16 +285,8 @@ packages:
     resolution: {integrity: sha512-CvLSkwXGWnYlF9+J3iZUvwgAxKiYzK3BWuo+mLzD/MDGOZDj7Gq8+hqaOkMxmJwmlv0iu86uH5fdADd9Hxkymw==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/helper-string-parser@7.24.1':
-    resolution: {integrity: sha512-2ofRCjnnA9y+wk8b9IAREroeUP02KHp431N2mhKniy2yKIDKpbrHv9eXwm8cBeWQYcJmzv5qKCu65P47eCF7CQ==}
-    engines: {node: '>=6.9.0'}
-
   '@babel/helper-string-parser@7.24.6':
     resolution: {integrity: sha512-WdJjwMEkmBicq5T9fm/cHND3+UlFa2Yj8ALLgmoSQAJZysYbBjw+azChSGPN4DSPLXOcooGRvDwZWMcF/mLO2Q==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/helper-validator-identifier@7.24.5':
-    resolution: {integrity: sha512-3q93SSKX2TWCG30M2G2kwaKeTYgEUp5Snjuj8qm729SObL6nbtUldAi37qbxkD5gg3xnBio+f9nqpSepGZMvxA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/helper-validator-identifier@7.24.6':
@@ -312,11 +304,6 @@ packages:
   '@babel/highlight@7.24.6':
     resolution: {integrity: sha512-2YnuOp4HAk2BsBrJJvYCbItHx0zWscI1C3zgWkz+wDyD9I7GIVrfnLyrR4Y1VR+7p+chAEcrgRQYZAGIKMV7vQ==}
     engines: {node: '>=6.9.0'}
-
-  '@babel/parser@7.24.5':
-    resolution: {integrity: sha512-EOv5IK8arwh3LI47dz1b0tKUb/1uhHAnHJOrjgtQMIpu1uXd9mlFrJg9IUgGUgZ41Ch0K8REPTYpO7B76b4vJg==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
 
   '@babel/parser@7.24.6':
     resolution: {integrity: sha512-eNZXdfU35nJC2h24RznROuOpO94h6x8sg9ju0tT9biNtLZ2vuP8SduLqqV+/8+cebSLV9SJEAN5Z3zQbJG/M+Q==}
@@ -341,10 +328,6 @@ packages:
 
   '@babel/traverse@7.24.6':
     resolution: {integrity: sha512-OsNjaJwT9Zn8ozxcfoBc+RaHdj3gFmCmYoQLUII1o6ZrUwku0BMg80FoOTPx+Gi6XhcQxAYE4xyjPTo4SxEQqw==}
-    engines: {node: '>=6.9.0'}
-
-  '@babel/types@7.24.5':
-    resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
     engines: {node: '>=6.9.0'}
 
   '@babel/types@7.24.6':
@@ -591,46 +574,55 @@ packages:
     resolution: {integrity: sha512-C/zbRYRXFjWvz9Z4haRxcTdnkPt1BtCkz+7RtBSuNmKzMzp3ZxdM28Mpccn6pt28/UWUCTXa+b0Mx1k3g6NOMA==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.18.0':
     resolution: {integrity: sha512-l3m9ewPgjQSXrUMHg93vt0hYCGnrMOcUpTz6FLtbwljo2HluS4zTXFy2571YQbisTnfTKPZ01u/ukJdQTLGh9A==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.18.0':
     resolution: {integrity: sha512-rJ5D47d8WD7J+7STKdCUAgmQk49xuFrRi9pZkWoRD1UeSMakbcepWXPF8ycChBoAqs1pb2wzvbY6Q33WmN2ftw==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.18.0':
     resolution: {integrity: sha512-be6Yx37b24ZwxQ+wOQXXLZqpq4jTckJhtGlWGZs68TgdKXJgw54lUUoFYrg6Zs/kjzAQwEwYbp8JxZVzZLRepQ==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-powerpc64le-gnu@4.18.0':
     resolution: {integrity: sha512-hNVMQK+qrA9Todu9+wqrXOHxFiD5YmdEi3paj6vP02Kx1hjd2LLYR2eaN7DsEshg09+9uzWi2W18MJDlG0cxJA==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-gnu@4.18.0':
     resolution: {integrity: sha512-ROCM7i+m1NfdrsmvwSzoxp9HFtmKGHEqu5NNDiZWQtXLA8S5HBCkVvKAxJ8U+CVctHwV2Gb5VUaK7UAkzhDjlg==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-s390x-gnu@4.18.0':
     resolution: {integrity: sha512-0UyyRHyDN42QL+NbqevXIIUnKA47A+45WyasO+y2bGJ1mhQrfrtXUpTxCOrfxCR4esV3/RLYyucGVPiUsO8xjg==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.18.0':
     resolution: {integrity: sha512-xuglR2rBVHA5UsI8h8UbX4VJ470PtGCf5Vpswh7p2ukaqBGFTnsfzxUBetoWBWymHMxbIG0Cmx7Y9qDZzr648w==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.18.0':
     resolution: {integrity: sha512-LKaqQL9osY/ir2geuLVvRRs+utWUNilzdE90TpyoX0eNqPzWjRm14oMEE+YLve4k/NAqCdPkGYDaDF5Sw+xBfg==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-win32-arm64-msvc@4.18.0':
     resolution: {integrity: sha512-7J6TkZQFGo9qBKH0pk2cEVSRhJbL6MtfWxth7Y5YmZs57Pi+4x6c2dStAUvaQkHQLnEQv1jzBUW43GvZW8OFqA==}
@@ -1655,11 +1647,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.24.6
 
-  '@babel/helper-string-parser@7.24.1': {}
-
   '@babel/helper-string-parser@7.24.6': {}
-
-  '@babel/helper-validator-identifier@7.24.5': {}
 
   '@babel/helper-validator-identifier@7.24.6': {}
 
@@ -1676,10 +1664,6 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
       picocolors: 1.0.1
-
-  '@babel/parser@7.24.5':
-    dependencies:
-      '@babel/types': 7.24.5
 
   '@babel/parser@7.24.6':
     dependencies:
@@ -1715,12 +1699,6 @@ snapshots:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-
-  '@babel/types@7.24.5':
-    dependencies:
-      '@babel/helper-string-parser': 7.24.1
-      '@babel/helper-validator-identifier': 7.24.5
-      to-fast-properties: 2.0.0
 
   '@babel/types@7.24.6':
     dependencies:
@@ -1937,16 +1915,16 @@ snapshots:
 
   '@types/babel__generator@7.6.8':
     dependencies:
-      '@babel/types': 7.24.5
+      '@babel/types': 7.24.6
 
   '@types/babel__template@7.4.4':
     dependencies:
       '@babel/parser': 7.24.6
-      '@babel/types': 7.24.5
+      '@babel/types': 7.24.6
 
   '@types/babel__traverse@7.20.6':
     dependencies:
-      '@babel/types': 7.24.5
+      '@babel/types': 7.24.6
 
   '@types/estree@1.0.5': {}
 
@@ -2007,7 +1985,7 @@ snapshots:
 
   '@vue/compiler-sfc@3.4.27':
     dependencies:
-      '@babel/parser': 7.24.5
+      '@babel/parser': 7.24.6
       '@vue/compiler-core': 3.4.27
       '@vue/compiler-dom': 3.4.27
       '@vue/compiler-ssr': 3.4.27
