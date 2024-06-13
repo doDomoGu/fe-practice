@@ -6,5 +6,5 @@ export default defineComponent({
 })
 </script>
 <template>
-  <div>这个一个input-text组件</div>
+  <div>这是一个input-text组件</div>
 </template>
