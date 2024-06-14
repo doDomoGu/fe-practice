@@ -22,12 +22,16 @@ let editorPreviewIframe = null
 
 // 发送数据给"画布预览"页面, 用于初始化状态
 onMounted(() => {
-  console.log('onMounted', document.getElementById('editor-preview'))
+  // console.log('onMounted', document.getElementById('editor-preview'))
   editorPreviewIframe = document.getElementById('editor-preview')
   setTimeout(() => {
-    console.log('onload', 'postmessage')
+    // console.log('onload', 'postmessage')
     editorPreviewIframe.contentWindow.postMessage(
-      { action: 'init', data: editorStore.get('content') || [] },
+      {
+        from: 'editor',
+        action: 'init',
+        data: editorStore.get('content') || []
+      },
       '*'
     )
   }, 500)
@@ -35,17 +39,34 @@ onMounted(() => {
 
 // editor 的事件总线
 const eventBus = useEventBus('editor')
-
 eventBus.on((e) => {
-  editorPreviewIframe.contentWindow.postMessage(e, '*')
+  // console.log('e', e)
+  // 将指定操作和数据发送给"画布预览"页面
+  if (['addControl', 'clearControl'].includes(e.action)) {
+    editorPreviewIframe.contentWindow.postMessage({ ...e, from: 'editor' }, '*')
+  }
 })
 
-// 接收 editorPreview的message
-window.addEventListener('message', (event) => {
-  console.log('received', event.data)
-  if (event.data.type === 'select-item') {
-    // editorStore.set('content', event.data.data)
-    setCurrentControl(event.data.data)
+// 接收 "画布预览"页面的message
+window.addEventListener('message', (e) => {
+  console.log('01 received-message', e.data)
+  const { from, action, data } = e.data
+  if (from == 'editor-preview') {
+    console.log('02')
+    switch (action) {
+      case 'initFinish':
+        eventBus.emit({ action: 'initFinish', data })
+        break
+      case 'addControlSuccess':
+        eventBus.emit({ action: 'addControlSuccess', data })
+        break
+      case 'clearControlSuccess':
+        eventBus.emit({ action: 'clearControlSuccess' })
+        break
+      case 'select-item':
+        setCurrentControl(data)
+        break
+    }
   }
 })
 </script>

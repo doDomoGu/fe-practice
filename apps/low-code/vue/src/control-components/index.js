@@ -2,10 +2,9 @@ export async function setupControlComponents(app) {
   // console.log('import.meta.glob', import.meta.glob('./**/index.vue')['./title-text/index.vue']())
   // console.log('import.meta', import.meta)
   const components = import.meta.glob('./**/index.vue')
-
-  for (const path in components) {
-    const comp = await components[path]()
-    // console.log('comp', comp.default)
+  window.controlConfigs = []
+  for (const compPath of Object.keys(components)) {
+    const comp = await components[compPath]()
     // 全局注册组件
     app.component(
       comp.default.name,
@@ -14,6 +13,8 @@ export async function setupControlComponents(app) {
       // 那么就会优先使用 `.default`，否则回退到使用模块的根。
       // componentConfig.default || componentConfig
     )
+
+    window.controlConfigs.push(comp.config)
   }
 
   // ['./title-text/index.vue']()
