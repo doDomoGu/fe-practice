@@ -4,10 +4,10 @@ import component from './src'
 import Icon from './icon.svg'
 
 export const config = {
-  id: 'text-input',
-  label: '文本输入框',
+  id: 'title-text',
+  label: '标题文本',
   icon: Icon,
   limit: 50,
-  componentName: 'ElementTextInput'
+  componentName: 'ElementTitleText'
 }
 export default component

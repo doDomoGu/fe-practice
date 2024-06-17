@@ -3,31 +3,31 @@ import PropTypes from 'prop-types'
 import { EventContext } from '@/hooks/useEvent'
 // import { useGlobalComponents } from '@/elements/elementsCompProvider'
 
-import Item from './Item'
-// import * as elements from '@/elements'
-// import { setupElementsComp } from '@/elements'
+import ElementItem from './Item'
+
+import * as elements from '@/elements'
 
 // 元件库
 const Elements = (props) => {
   const { eventState, handleEvent } = useContext(EventContext)
 
-  // const { TitleText } = useGlobalComponents()
+  // console.log('elements', eventState)
 
-  const elementConfigs = window.elementConfigs || []
-  const elementsList = ['TitleText', 'Text']
-  console.log({ elements })
-  const { ElementTextInput, ElmenetTitleText } = elements
-  // const handleAdd = (item) => {
-  //   const { id, type } = item
-  //   const { elements } = eventState
+  const handleAdd = (item) => {
+    console.log('handleAdd', item)
 
-  //   if (elements.includes(id)) return
+    // const { id, type } = item
+    // const { elements } = eventState
 
-  //   handleEvent('addElement', {
-  //     id,
-  //     type
-  //   })
-  // }
+    // if (elements.includes(id)) return
+
+    handleEvent({
+      action: 'addElement',
+      data: {
+        ...item
+      }
+    })
+  }
 
   const handleClear = () => {
     handleEvent({ action: 'clearElements' })
@@ -35,7 +35,7 @@ const Elements = (props) => {
 
   // 根据属性渲染对应的组件
   const DynamicComponent = ({ name }) => {
-    const Component = elements[name]
+    const Component = elements.components[name]
     return <Component />
   }
 
@@ -47,26 +47,26 @@ const Elements = (props) => {
       </div>
       <div className="overflow-auto flex-1">
         <div className="flex flex-wrap justify-start">
-          {Object.keys(elements).map((eleName) => {
+          {/* {Object.keys(elements.components).map((eleName) => {
             return (
-              <div className="w-[200px] m-2">
+              <div className="w-[200px] m-2" key={eleName}>
                 <div> {eleName} </div>
                 <DynamicComponent name={eleName} />
               </div>
             )
-            // return <ElementTextInput key={eleName} />
-          })}
+          })} */}
 
-          {/* { for (let item of elementConfigs) {
+          {Object.keys(elements.configs).map((componentName) => {
+            const item = elements.configs[componentName]
             return (
-              <Item
-              {...item}
-              key={item.id}
-              onClick={handleAdd(item)}
-              className="m-2"
-            />
+              <ElementItem
+                {...item}
+                key={item.componentName}
+                onClick={() => handleAdd(item)}
+                className="m-2"
+              />
             )
-        }} */}
+          })}
         </div>
       </div>
     </div>
