@@ -1,12 +1,19 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-
 import '@dodomogu/dev-configs/tailwind.css'
-// import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-)
+// import { setupElementsComp } from '@/elements'
+
+const root = createRoot(document.getElementById('root')!)
+
+async function run() {
+  // await setupElementsComp(root)
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  )
+}
+
+run()

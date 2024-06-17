@@ -8,7 +8,7 @@ export default defineConfig({
     alias: {
       '@': '/src'
     },
-    extensions: ['.tsx']
+    extensions: ['.tsx', '.ts']
   },
   server: {
     port: 5274
