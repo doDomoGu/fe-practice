@@ -4,7 +4,7 @@ import { EventContext } from '@/hooks/useEvent'
 // import { useGlobalComponents } from '@/elements/elementsCompProvider'
 
 import Item from './Item'
-import * as elements from '@/elements'
+// import * as elements from '@/elements'
 // import { setupElementsComp } from '@/elements'
 
 // 元件库
