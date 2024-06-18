@@ -2,7 +2,7 @@ import React from 'react'
 import { Outlet, RouteObject } from 'react-router-dom'
 import Projects from '@/pages/projects'
 import Editor from '@/pages/editor'
-import Preview from '@/pages/preview'
+import EditorCanvas from '@/pages/editor-canvas'
 
 export interface MyRouteObject {
   title?: string
@@ -22,8 +22,8 @@ export const router: Array<MyRouter> = [
     title: '编辑器'
   },
   {
-    path: '/preview',
-    element: <Preview />,
-    title: '预览'
+    path: '/edit-canvas/:id',
+    element: <EditorCanvas />,
+    title: '编辑器-画布'
   }
 ]

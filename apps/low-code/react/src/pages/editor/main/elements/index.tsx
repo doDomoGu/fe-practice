@@ -1,7 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { EventContext } from '@/hooks/useEvent'
-// import { useGlobalComponents } from '@/elements/elementsCompProvider'
 
 import ElementItem from './Item'
 
@@ -10,7 +9,7 @@ import * as elements from '@/elements'
 // 元件库
 const Elements = (props) => {
   const { eventState, handleEvent } = useContext(EventContext)
-
+  // const { id } = useContent(EditorContext)
   // console.log('elements', eventState)
 
   const handleAdd = (item) => {
