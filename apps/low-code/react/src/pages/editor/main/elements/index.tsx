@@ -39,7 +39,7 @@ const Elements = (props) => {
   }
 
   return (
-    <div className="w-[250px] bg-gray-200 text-black h-full flex flex-col">
+    <div className="w-full bg-gray-200 text-black h-full flex flex-col">
       <div className="flex-none h-[30px] items-center px-2 bg-gray-700 text-gray-400 text-center">
         元件库
         <button onClick={handleClear}>清空</button>

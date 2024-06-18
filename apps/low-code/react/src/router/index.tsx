@@ -22,7 +22,7 @@ export const router: Array<MyRouter> = [
     title: '编辑器'
   },
   {
-    path: '/edit-canvas/:id',
+    path: '/editor-canvas/:id',
     element: <EditorCanvas />,
     title: '编辑器-画布'
   }

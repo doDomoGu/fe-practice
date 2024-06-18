@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 
 import CompElements from './elements'
-import CompPreview from './Preview.tsx'
+import CompPreview from './preview'
+import CompSettings from './settings'
 
 import { EventContext } from '@/hooks/useEvent'
 
@@ -12,9 +13,9 @@ const Main = (props) => {
   // console.log({ eventState })
   // if (eventState)
   return (
-    <div className="flex">
+    <div className="flex h-full">
       {/* 左侧 (元件库) */}
-      <div className="flex-none">
+      <div className="flex-none w-[280px] h-full">
         <CompElements />
       </div>
 
@@ -24,7 +25,9 @@ const Main = (props) => {
       </div>
 
       {/* 右侧 (配置区) */}
-      <div className="flex-none">settings</div>
+      <div className="flex-none w-[280px] h-full">
+        <CompSettings />
+      </div>
     </div>
   )
 }

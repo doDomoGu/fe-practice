@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const EventContext = React.createContext()
+export const EventContext = React.createContext({})
 
 export const EventProvider = ({ children }) => {
   const [eventState, setEventState] = React.useState(null)
