@@ -1,4 +1,7 @@
 import { createContext } from 'react'
-export const EditorContext = createContext({
-  id: String
-})
+
+interface EditorContextType {
+  id: string
+}
+
+export const EditorContext = createContext<EditorContextType>({})
