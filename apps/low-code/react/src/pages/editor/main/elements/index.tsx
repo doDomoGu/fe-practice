@@ -1,5 +1,5 @@
-import React, { useContext } from 'react'
-import PropTypes from 'prop-types'
+import { useContext } from 'react'
+// import PropTypes from 'prop-types'
 import { EventContext } from '@/hooks/useEvent'
 
 import ElementItem from './Item'

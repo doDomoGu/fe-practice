@@ -12,6 +12,23 @@ const Main = (props) => {
   // const { id } = useContent(EditorContext)
   // console.log({ eventState })
   // if (eventState)
+
+  // console.log('onMounted', document.getElementById('editor-preview'))
+  setTimeout(() => {
+    let editorPreviewIframe = document.getElementById('editor-preview')
+    if (!editorPreviewIframe) return
+    // console.log('onload', 'postmessage')
+    editorPreviewIframe.contentWindow.postMessage(
+      {
+        from: 'editor',
+        action: 'init',
+        data: [123]
+      },
+      '*'
+    )
+    console.log('onload', 'postmessage')
+  }, 500)
+
   return (
     <div className="flex h-full">
       {/* 左侧 (元件库) */}
