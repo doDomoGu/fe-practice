@@ -1,0 +1,11 @@
+{
+  "name": "@dodomogu/cli",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "dodomogu-cli": "./index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
