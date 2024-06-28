@@ -3,15 +3,23 @@ import PropTypes from 'prop-types'
 import ProductCategoryRow from './product-category-row'
 import ProductRow from './product-row'
 const ProductTable = (props) => {
+  const filteredProducts = props.products.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(props.searchTerm.toLowerCase()) &&
+      (props.inStockOnly === false || item.stocked)
+    )
+  })
+
   const categoryList = new Set()
-  props.items.forEach((v) => {
+
+  props.products.forEach((v) => {
     categoryList.add(v.category)
   })
-  const items = new Map()
+  const productsByCategory = new Map()
   ;[...categoryList].forEach((v) => {
-    items.set(
+    productsByCategory.set(
       v,
-      props.items.filter((item) => item.category === v)
+      filteredProducts.filter((item) => item.category === v)
     )
   })
 
@@ -20,7 +28,7 @@ const ProductTable = (props) => {
       {[...categoryList].map((category) => (
         <div key={category} className="m-2">
           <ProductCategoryRow category={category} />
-          {items.get(category).map((item) => (
+          {productsByCategory.get(category).map((item) => (
             <ProductRow {...item} key={item.name} />
           ))}
         </div>
@@ -29,13 +37,15 @@ const ProductTable = (props) => {
   )
 }
 ProductTable.propTypes = {
-  items: PropTypes.arrayOf(
+  products: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
       price: PropTypes.string,
       category: PropTypes.string,
       stocked: PropTypes.bool
     })
-  )
+  ),
+  searchTerm: PropTypes.string.isRequired,
+  inStockOnly: PropTypes.bool.isRequired
 }
 export default ProductTable

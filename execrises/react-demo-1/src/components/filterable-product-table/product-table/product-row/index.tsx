@@ -6,6 +6,7 @@ const ProductRow = (props) => {
     <div className="flex">
       <div className="flex-1">{props.name}</div>
       <div className="flex-1">{props.price}</div>
+      <div className="flex-1">{props.stocked ? 'in stock' : 'out stock'}</div>
     </div>
   )
 }
