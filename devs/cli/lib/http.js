@@ -1,4 +1,4 @@
-const axios = require('axios')
+import axios from 'axios'
 
 axios.interceptors.response.use((res) => {
   return res.data
@@ -9,10 +9,7 @@ async function getRepoList() {
 }
 
 async function getTagList(repo) {
-  return axios.get(`http://api.github.com/orgs/FEcourseZone/${repo}/tags`)
+  return axios.get(`http://api.github.com/repos/FEcourseZone/${repo}/tags`)
 }
 
-module.exports = {
-  getRepoList,
-  getTagList
-}
+export { getRepoList, getTagList }

@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-
+import { program } from 'commander'
+import createAction from '../lib/create.js'
 console.log('Hello, CLI')
-
-const { program } = require('commander')
 
 // 定义命令和参数
 
@@ -14,7 +13,7 @@ program
   .action((name, options) => {
     // 打印执行结果
     console.log('program is ready to create, name is ', name, options)
-    require('../lib/create')(name, options)
+    createAction(name, options)
   })
 
 program.parse(process.argv)

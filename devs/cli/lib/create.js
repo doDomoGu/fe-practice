@@ -1,10 +1,11 @@
-const path = require('path')
-const fs = require('fs-extra')
-const inquirer = require('inquirer')
-const Generator = require('./generator')
+import path from 'path'
+import fs from 'fs-extra'
+import inquirer from 'inquirer'
+
+import Generator from './generator.js'
 
 // 1. 对外抛出一个方法用来接收用户需要创建文件的项目&参数
-module.exports = async function (name, options) {
+export default async function (name, options) {
   // 判断项目是否存在
   const cwd = process.cwd()
   const targetDir = path.join(cwd, name)

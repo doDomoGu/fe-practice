@@ -1,14 +1,12 @@
-const ora = import('ora')
+import ora from 'ora'
+import path from 'path'
+import util from 'util'
+import chalk from 'chalk'
+import downloadGitRepo from 'download-git-repo'
+import inquirer from 'inquirer'
+// import process from 'process'
 
-const path = import('path')
-
-const { getRepoList, getTagList } = require('./http')
-
-const downloadGitRepo = require('download-git-repo')
-
-const util = require('util')
-
-const chalk = import('chalk')
+import { getRepoList, getTagList } from './http.js'
 
 // 封装loading
 async function wrapLoading(fn, message, ...args) {
@@ -70,7 +68,11 @@ class Generator {
   // 获取用户选择的版本
   async getTag(repo) {
     // 1. 基于repo的选择，远程拉取版本列表
-    const tagList = await wrapLoading(getTagList, 'waiting for fetch tags')
+    const tagList = await wrapLoading(
+      getTagList,
+      'waiting for fetch tags',
+      repo
+    )
 
     if (!tagList) return
 
@@ -89,11 +91,11 @@ class Generator {
       this.downloadGitRepo,
       'waiting download template',
       requestUrl,
-      path.resolve(proccess.cwd(), this.targetDir)
+      path.resolve(process.cwd(), this.targetDir)
     )
 
     console.log(`\r\nSuccessfully created project ${chalk.cyan(this.name)}`)
   }
 }
 
-module.exports = Generator
+export default Generator
