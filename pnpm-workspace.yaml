@@ -1,5 +1,4 @@
 packages:
   - 'apps/**'
-  - 'devs/**'
-  - 'execrises/**'
+  - 'demo/**'
   - 'libs/**'
