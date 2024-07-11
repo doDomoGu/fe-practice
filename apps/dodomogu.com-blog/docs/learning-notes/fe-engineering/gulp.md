@@ -28,12 +28,31 @@
 1. gulp.src() - 读取文件
    * 面试: 获取想要处理的文件流 vs Webpack(node:fs)
   ```js
-    gulp.src(glob[, options]) // 并非原本的文件流，而是虚拟文件对象流 
+    gulp.src(glob[, options]) // 并非原本的文件流，而是虚拟文件对象流 => 减少对于实体文件I/O的次数
 
     // 1. globs 文件匹配模式
     使用数组的方式来匹配多种文件
     gulp.src(['*.js','./js/*.js'])
 
     // 2. options 处理文件的配置项
-
+    options.buffer - boolean bufferstream
+    options.read - boolean => 设置文件内容是否需要读取返回
+    options.base - 文件基础路径
   ```
+
+2. .pipe() - 把文件通过pipe的方式导入到gulp插件中
+```js
+gulp.src('zhaowa/js/*.js')
+// minify()  使用压缩工具
+  .pipe(minify())
+  // .pipe(...)  其他的中途加工  串行 输入是上一次的结果
+  .pipe(gulp.dest('build')) // 导入到产物
+```
+
+3. gulp.dest() - 处理后的流内容写入到文件中
+```js
+  gulp.dest(path[, options])
+  // 1. path - 写入文件的路径 
+  // 2. options可选参数
+    //  options.mode - string 0777 所在目录的权限
+```
