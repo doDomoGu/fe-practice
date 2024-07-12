@@ -6,9 +6,11 @@ function Home() {
     <div>
       <div>Home</div>
       <div className="mt-4 flex">
-        <div className="mr-4">导航</div>
-
-        <div></div>
+        <Link to="/paper">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            生成游戏纸
+          </button>
+        </Link>
       </div>
     </div>
   )
