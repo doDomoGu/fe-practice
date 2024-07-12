@@ -56,3 +56,31 @@ gulp.src('zhaowa/js/*.js')
   // 2. options可选参数
     //  options.mode - string 0777 所在目录的权限
 ```
+
+4. gulp.watch() - 监视文件的变化，用以触发相应的任务流
+```js
+  gulp.watch(glob,[...options], tasks)
+  // glob - 监视文件的匹配
+  // tasks - 文件变化后要执行的任务
+
+  // 创建任务
+
+  glup.task('minify', function(){
+    // 任务内容
+  })
+
+  glup.task('uglify', function(){
+    // 任务内容
+  })
+
+  // < 4.0 
+  gulp.watch('./page/**/*.js', ['uglify', 'minify'])
+
+  // >= 4.0
+  gulp.watch('./page/**/*.js',
+    gulp.parallel([
+      'uglify',
+      'minify'
+    ])
+  )
+```
