@@ -1,0 +1,23 @@
+{
+  "name": "@dodomogu/demo_jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.24.7",
+    "@testing-library/jest-dom": "^6.4.6",
+    "@types/jest": "^29.5.12",
+    "@vue/test-utils": "2.4.0-alpha.2",
+    "@vue/vue3-jest": "^29.2.6",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.2",
+    "vue": "^3.4.31"
+  }
+}
