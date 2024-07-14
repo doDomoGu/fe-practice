@@ -11,7 +11,7 @@ import {
 
 const MySelect = (props) => {
   return (
-    <Select>
+    <Select onValueChange={props.onChange} defaultValue={props.value}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder={props.placeholder || '请选择'} />
       </SelectTrigger>
@@ -27,6 +27,8 @@ const MySelect = (props) => {
 }
 
 MySelect.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({

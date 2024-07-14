@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet, RouteObject } from 'react-router-dom'
 import Home from '@/pages/Home'
 import Paper from '@/pages/paper'
+import PaperPrint from '@/pages/paper/Print'
 // import FiftyTone from '@/pages/fifty-tone'
 
 export interface MyRouteObject {
@@ -20,6 +21,11 @@ export const router: Array<MyRouter> = [
     path: '/paper',
     element: <Paper />,
     title: '游戏纸'
+  },
+  {
+    path: '/paper/print/:key',
+    element: <PaperPrint />,
+    title: '打印游戏纸'
   }
   // {
   //   path: '/fifty-tone',
