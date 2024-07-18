@@ -1,21 +1,19 @@
 <script setup>
 import { ref } from 'vue'
-import List from '@/components/list/index.vue'
-import listData from './listData.js'
+import List from '@/components/List.vue'
+import listItems from '@/data/listItems.js'
 
+const items = ref([])
 
-const data = ref([])
-
-setTimeout(()=>{
-  data.value = listData
-},500)
+setTimeout(() => {
+  items.value = listItems
+}, 100)
 </script>
 
 <template>
   <div>
-    <List :data="data" />
+    <List :items="items" />
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
