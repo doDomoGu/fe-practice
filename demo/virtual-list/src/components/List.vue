@@ -21,14 +21,13 @@ const containerRef = ref(null)
 watch(
   () => props.items,
   () => {
-    console.log('listRef', containerRef.value)
 
     containerRef.value.addEventListener(
       'scroll',
       throttle(function (e) {
-        let scrollPos = Math.round(e.target.scrollTop / itemHeight)
-        pos.value = scrollPos
-        // console.log(e.target.scrollTop)
+        let scrollPos = Math.floor(e.target.scrollTop / itemHeight)
+        pos.value = Math.min(scrollPos, props.items.length)
+        console.log(e.target.scrollTop,itemHeight, scrollPos, props.items.length)
         console.log('scroll', e)
       }, 50)
     )
@@ -61,13 +60,13 @@ const showItems = computed(() => {
     <ul
       class="ul"
       :style="{
-        height: props.items.length * 40 + 'px',
-        paddingTop: pos * 40 + 'px'
+        height: (props.items.length * itemHeight - pos * itemHeight) + 'px',
+        paddingTop: pos * itemHeight + 'px'
       }"
     >
       <li
-        v-for="(item, index) in showItems"
-        :key="index"
+        v-for="item in showItems"
+        :key="item.label"
         :style="{ height: `${itemHeight}px` }"
       >
         <div>{{ item.label }} -- {{ pos }}</div>
