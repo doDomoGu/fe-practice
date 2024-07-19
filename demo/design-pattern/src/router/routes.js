@@ -1,4 +1,5 @@
 import FactoryView from '@/views/factory/index.vue'
+import SingletonView from '@/views/singleton/index.vue'
 
 export default [
   {
@@ -8,8 +9,8 @@ export default [
   },
   {
     path: '/singleton',
-    name: '单例模式'
-    // component: SingletonView
+    name: '单例模式',
+    component: SingletonView
   },
   {
     path: '/publish-subscribe',
