@@ -21,13 +21,17 @@ const containerRef = ref(null)
 watch(
   () => props.items,
   () => {
-
     containerRef.value.addEventListener(
       'scroll',
       throttle(function (e) {
         let scrollPos = Math.floor(e.target.scrollTop / itemHeight)
         pos.value = Math.min(scrollPos, props.items.length)
-        console.log(e.target.scrollTop,itemHeight, scrollPos, props.items.length)
+        console.log(
+          e.target.scrollTop,
+          itemHeight,
+          scrollPos,
+          props.items.length
+        )
         console.log('scroll', e)
       }, 50)
     )
@@ -60,8 +64,9 @@ const showItems = computed(() => {
     <ul
       class="ul"
       :style="{
-        height: (props.items.length * itemHeight - pos * itemHeight) + 'px',
-        paddingTop: pos * itemHeight + 'px'
+        height: props.items.length * itemHeight - pos * itemHeight + 'px',
+        paddingTop: pos * itemHeight + 'px',
+        paddingBottom: '10px'
       }"
     >
       <li
@@ -95,11 +100,11 @@ const showItems = computed(() => {
 
 .ul li {
   padding-top: 10px;
+  box-sizing: border-box;
 }
 
 .ul li div {
   height: 40px;
-  box-sizing: border-box;
   border: 1px solid #333;
 }
 </style>
