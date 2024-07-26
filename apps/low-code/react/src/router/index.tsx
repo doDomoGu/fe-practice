@@ -4,6 +4,8 @@ import Projects from '@/pages/projects'
 import Editor from '@/pages/editor'
 import EditorCanvas from '@/pages/editor-canvas'
 
+import Demo from '@/pages/demo'
+
 export interface MyRouteObject {
   title?: string
 }
@@ -25,5 +27,10 @@ export const router: Array<MyRouter> = [
     path: '/editor-canvas/:id',
     element: <EditorCanvas />,
     title: '编辑器-画布'
+  },
+  {
+    path: '/demo',
+    element: <Demo />,
+    title: 'demo'
   }
 ]
