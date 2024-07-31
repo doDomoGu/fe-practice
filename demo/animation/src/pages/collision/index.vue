@@ -1,62 +1,85 @@
 <script setup>
-// import { onMounted } from 'vue'
-import { Vector2 } from '@catsums/vector2'
-import { v4 as uuidv4 } from 'uuid'
+import { onMounted, ref } from 'vue'
+// import { Vector2 } from '@catsums/vector2'
+import Balls from './ball.js'
+import { paintBall, paintBalls } from './canvas.js'
 
-import Ball from './ball.js'
+const balls = new Balls()
 
-const ballCount = 10 // 至多多少球
-const addBallByFrameCount = 60 // 每X帧加一个球
-const balls = []
+const ballCount = 200 // 生成多少球  debug只添加一个球
 
-const addBall = () => {
-  let ball = new Ball(50, 30, balls.length)
-  ball.color = uuidv4().slice(0, 6)
-  ball.velocity = new Vector2(5 * Math.random(), 5 * Math.random())
-  balls.push(ball)
-}
+const animationTime = 300 // 动画执行时长 单位（秒）
 
-// for (let i = 0; i < ballNum; i++) {
-//   addBall()
-// }
+const fps = 60 // TODO 先固定 60帧  应动态获取客户端数值
 
-// console.log({ balls })
+const runningFlag = ref(true) // 用于判断是否继续执行
+const frameCount = ref(0) // 表示第几帧
 
-let steps = 0
+onMounted(() => {
+  var canvas = document.getElementById('MyCanvas')
+  var ctx = canvas.getContext('2d')
 
-console.time('time')
+  // {animationTime}秒后将 执行标志位置为false
+  setTimeout(() => (runningFlag.value = false), animationTime * 1000)
 
-function step() {
-  // console.log({ steps })
-  //重绘背景
-  // paintBg()
-  //每隔一定时间增加一个小球
-  if (
-    steps % addBallByFrameCount === 0 &&
-    steps < ballCount * addBallByFrameCount
-  ) {
-    console.timeLog('time')
-    addBall()
-    console.log({ steps, balls })
+  console.time('frameTime')
+  // let executingTimeStart = 0
+
+  const run = (t) => {
+    // 判断是否继续执行
+    if (runningFlag.value) {
+      // !executingTimeStart && (executingTimeStart = t)
+
+      // 更新每个小球的状态
+      balls.update(canvas.width, canvas.height)
+
+      if (balls.balls.length > 0) {
+        // console.log(
+        //   balls.balls[0].pos.x,
+        //   balls.balls[0].pos.y,
+        //   balls.balls[0].velocity.x,
+        //   balls.balls[0].velocity.y
+        // )
+        // console.log(balls.balls[0])
+      }
+
+      // 每60帧(fps) （约等于每一秒）执行的逻辑
+      if (frameCount.value % fps === 0) {
+        console.timeLog('frameTime')
+
+        // 判断是否要添加小球
+        if (balls.balls.length < ballCount) {
+          // 添加一个小球
+          balls.add()
+          // console.log('add a ball')
+        }
+        // console.log({ balls })
+      }
+
+      // 清空画布
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      // 绘制当前状态下的小球
+      paintBalls(ctx, balls.balls)
+
+      frameCount.value++
+
+      requestAnimationFrame(run)
+    } else {
+      console.timeEnd('frameTime')
+    }
   }
-  //更新每个小球的状态
-  //  balls = balls.map((ball,index,originArr)=>{
-  //    ball.update(index,originArr);
-  //    ball.paint();//描线但不在画布上绘制
-  //    return ball;
-  //  });
-  //绘制每个小球位置
 
-  steps++
-  requestAnimationFrame(step)
-}
-step()
-// onMounted(() => {
-//   requestAnimationFrame(step)
-// })
+  // context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
+
+  run()
+})
 </script>
 
 <template>
+  <div>
+    {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
+    {{ balls.balls.length }}
+  </div>
   <canvas
     style="
       width: 800px;
@@ -64,6 +87,8 @@ step()
       border: 1px solid #000;
       background-color: #00800033;
     "
-    id="canvas"
+    width="800"
+    height="400"
+    id="MyCanvas"
   ></canvas>
 </template>
