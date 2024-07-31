@@ -17,6 +17,11 @@ const frameCount = ref(0) // 表示第几帧
 
 onMounted(() => {
   var canvas = document.getElementById('MyCanvas')
+
+  // console.log(canvas.offsetWidth, canvas.offsetHeight)
+  canvas.width = canvas.offsetWidth
+  canvas.height = canvas.offsetHeight
+
   var ctx = canvas.getContext('2d')
 
   // {animationTime}秒后将 执行标志位置为false
@@ -76,19 +81,32 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
-    {{ balls.balls.length }}
+  <div style="width: 100%; height: 100%; display: flex; flex-direction: column">
+    <div
+      style="
+        height: 6rem;
+        flex: none;
+        width: 100%;
+        text-align: center;
+        font-size: 4rem;
+      "
+    >
+      {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
+      {{ balls.balls.length }}
+    </div>
+    <canvas
+      style="
+        box-sizing: border-box;
+        flex: 1;
+        overflow: hidden;
+        width: 100%;
+        /* height: 100vh; */
+        border: 1px solid #000;
+        background-color: #00800033;
+      "
+      width="800"
+      height="400"
+      id="MyCanvas"
+    ></canvas>
   </div>
-  <canvas
-    style="
-      width: 800px;
-      height: 400px;
-      border: 1px solid #000;
-      background-color: #00800033;
-    "
-    width="800"
-    height="400"
-    id="MyCanvas"
-  ></canvas>
 </template>
