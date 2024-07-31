@@ -15,14 +15,15 @@ const fps = 60 // TODO 先固定 60帧  应动态获取客户端数值
 const runningFlag = ref(true) // 用于判断是否继续执行
 const frameCount = ref(0) // 表示第几帧
 
+const canvasRef = ref(null)
+
 onMounted(() => {
-  var canvas = document.getElementById('MyCanvas')
+  // var canvas = document.getElementById('MyCanvas')
+  console.log(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight)
+  canvasRef.value.width = canvasRef.value.offsetWidth
+  canvasRef.value.height = canvasRef.value.offsetHeight
 
-  // console.log(canvas.offsetWidth, canvas.offsetHeight)
-  canvas.width = canvas.offsetWidth
-  canvas.height = canvas.offsetHeight
-
-  var ctx = canvas.getContext('2d')
+  const ctx = canvasRef.value.getContext('2d')
 
   // {animationTime}秒后将 执行标志位置为false
   setTimeout(() => (runningFlag.value = false), animationTime * 1000)
@@ -36,7 +37,7 @@ onMounted(() => {
       // !executingTimeStart && (executingTimeStart = t)
 
       // 更新每个小球的状态
-      balls.update(canvas.width, canvas.height)
+      balls.update(canvasRef.value.width, canvasRef.value.height)
 
       if (balls.balls.length > 0) {
         // console.log(
@@ -62,7 +63,7 @@ onMounted(() => {
       }
 
       // 清空画布
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
       // 绘制当前状态下的小球
       paintBalls(ctx, balls.balls)
 
@@ -84,15 +85,17 @@ onMounted(() => {
   <div style="width: 100%; height: 100%; display: flex; flex-direction: column">
     <div
       style="
-        height: 3rem;
+        height: 2rem;
+        line-height: 1rem;
         flex: none;
         width: 100%;
         text-align: center;
-        font-size: 2rem;
+        font-size: 0.75rem;
       "
     >
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
-      {{ balls.balls.length }}
+      {{ balls.balls.length }} <br />
+      {{ canvasRef ? canvasRef.offsetWidth + '|' + canvasRef.offsetWidth : '' }}
     </div>
     <canvas
       style="
@@ -107,6 +110,7 @@ onMounted(() => {
       width="800"
       height="400"
       id="MyCanvas"
+      ref="canvasRef"
     ></canvas>
   </div>
 </template>
