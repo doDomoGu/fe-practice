@@ -84,11 +84,11 @@ onMounted(() => {
   <div style="width: 100%; height: 100%; display: flex; flex-direction: column">
     <div
       style="
-        height: 6rem;
+        height: 3rem;
         flex: none;
         width: 100%;
         text-align: center;
-        font-size: 4rem;
+        font-size: 2rem;
       "
     >
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
