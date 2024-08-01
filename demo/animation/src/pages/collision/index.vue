@@ -77,7 +77,7 @@ onMounted(() => {
 
   // context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
 
-  run()
+  setTimeout(() => run(), 100)
 })
 </script>
 
