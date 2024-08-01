@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
 
+import { spawn } from 'child_process'
 // import verifySignature from './verifySignature.js'
 
 const app = express()
@@ -16,7 +17,7 @@ app.use(bodyParser.json())
 // 验证GitHub签名的中间件
 app.use((req, res, next) => {
   const signature = req.headers['x-hub-signature-256']
-  console.log({ signature })
+  // console.log({ signature })
 
   if (!signature) {
     return res.sendStatus(403)
@@ -24,10 +25,10 @@ app.use((req, res, next) => {
 
   const sha = crypto.createHmac('sha256', GITHUB_WEBHOOK_SECRET)
   const payload = req.body
-  console.log(payload)
+  // console.log(payload)
   sha.update(JSON.stringify(payload))
   const createdSignature = `sha256=${sha.digest('hex')}`
-  console.log({ createdSignature })
+  // console.log({ createdSignature })
   if (signature !== createdSignature) {
     return res.sendStatus(403)
   }
@@ -35,13 +36,28 @@ app.use((req, res, next) => {
   next()
 })
 
+function run_cmd(cmd, args, callback) {
+  var child = spawn(cmd, args)
+  var resp = ''
+  child.stdout.on('data', function (buffer) {
+    resp += buffer.toString()
+  })
+  child.stdout.on('end', function () {
+    callback(resp)
+  })
+}
+
 // 处理GitHub webhook
 app.post('/', (req, res) => {
   const event = req.headers['x-github-event']
-  console.log({ event })
+
   if (event === 'ping') {
     // 响应GitHub的ping事件
     res.status(200).send('PONG')
+  } else if (event === 'push') {
+    run_cmd('sh', ['../../deploy.sh'], function (text) {
+      console.log('result', text)
+    })
   } else {
     // 处理其他事件
     console.log(event, req.body)
