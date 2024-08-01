@@ -1,53 +1,54 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import verifySignature from './verifySignature.js'
+import crypto from 'crypto'
 
-const SECRET = 'sadadsabcdsdfdsad'
+// import verifySignature from './verifySignature.js'
 
 const app = express()
 
-// app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+const PORT = 3000
+const GITHUB_WEBHOOK_SECRET = '123456'
 
-app.post(
-  '/',
-  // express.json({ type: 'application/json' }),
-  (request, response) => {
-    response.status(202).send('Accepted')
+// 解析POST请求体
+app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }))
 
-    // const githubEvent = request.headers['x-github-event']
-    // console.log(githubEvent)
-    console.log(request.headers)
-    console.log(request.body)
+// 验证GitHub签名的中间件
+app.use((req, res, next) => {
+  const signature = req.headers['x-hub-signature-256']
+  console.log({ signature })
 
-    verifySignature(
-      SECRET,
-      request.headers['x-hub-signature-256'],
-      request.body
-    ).then((r) => {
-      console.log('verify', r)
-    })
-    // verifySignature
-    // if (githubEvent === 'issues') {
-    //   const data = request.body;
-    //   const action = data.action;
-    //   if (action === 'opened') {
-    //     console.log(`An issue was opened with this title: ${data.issue.title}`);
-    //   } else if (action === 'closed') {
-    //     console.log(`An issue was closed by ${data.issue.user.login}`);
-    //   } else {
-    //     console.log(`Unhandled action for the issue event: ${action}`);
-    //   }
-    // } else if (githubEvent === 'ping') {
-    //   console.log('GitHub sent the ping event');
-    // } else {
-    //   console.log(`Unhandled event: ${githubEvent}`);
-    // }
+  if (!signature) {
+    return res.sendStatus(403)
   }
-)
 
-const port = 3000
+  const sha = crypto.createHmac('sha256', GITHUB_WEBHOOK_SECRET)
+  const payload = req.body
+  console.log(payload)
+  sha.update(JSON.stringify(payload))
+  const createdSignature = `sha256=${sha.digest('hex')}`
+  console.log({ createdSignature })
+  if (signature !== createdSignature) {
+    return res.sendStatus(403)
+  }
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+  next()
+})
+
+// 处理GitHub webhook
+app.post('/', (req, res) => {
+  const event = req.headers['x-github-event']
+  console.log({ event })
+  if (event === 'ping') {
+    // 响应GitHub的ping事件
+    res.status(200).send('PONG')
+  } else {
+    // 处理其他事件
+    console.log(event, req.body)
+    res.status(200).send('Event received')
+  }
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
 })

@@ -18,6 +18,7 @@ async function verifySignature(secret, header, payload) {
 
   let sigBytes = hexToBytes(sigHex)
   let dataBytes = encoder.encode(payload)
+  console.log({ algorithmName: algorithm.name, key, sigBytes, dataBytes })
   let equal = await crypto.subtle.verify(
     algorithm.name,
     key,
