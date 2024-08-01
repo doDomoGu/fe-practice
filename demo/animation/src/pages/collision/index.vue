@@ -108,7 +108,6 @@ onMounted(() => {
     >
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
       {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
-      {{ canvasRef ? canvasInstance.ctx : 'sdad' }}
       {{
         canvasRef
           ? canvasRef.offsetWidth +
