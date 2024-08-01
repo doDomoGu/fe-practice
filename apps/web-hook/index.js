@@ -57,8 +57,8 @@ app.post('/', (req, res) => {
   } else if (event === 'push') {
     run_cmd('sh', ['../../deploy.sh'], function (text) {
       console.log('result', text)
-      res.status(200).send('Deployed')
     })
+    res.status(200).send('push Deployed received')
   } else {
     // 处理其他事件
     console.log(event, req.body)
