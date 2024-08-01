@@ -1,13 +1,17 @@
 import express from 'express'
+import bodyParser from 'body-parser'
 import verifySignature from './verifySignature.js'
 
 const SECRET = 'sadadsabcdsdfdsad'
 
 const app = express()
 
+// app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 app.post(
   '/',
-  express.json({ type: 'application/json' }),
+  // express.json({ type: 'application/json' }),
   (request, response) => {
     response.status(202).send('Accepted')
 
