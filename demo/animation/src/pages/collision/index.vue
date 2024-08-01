@@ -1,32 +1,40 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 // import { Vector2 } from '@catsums/vector2'
-import Balls from './ball.js'
-import { paintBall, paintBalls } from './canvas.js'
+// import Balls from './ball.js'
+import Canvas from './ballCanvas.js'
 
-const balls = new Balls()
+// const balls = new Balls()
 
-const ballCount = 200 // 生成多少球  debug只添加一个球
+const ballCount = 250 // 生成多少球  debug只添加一个球
 
-const animationTime = 300 // 动画执行时长 单位（秒）
+const animationTime = -1 // 动画执行时长 单位（秒）  -1: 一直执行下去
 
-const fps = 60 // TODO 先固定 60帧  应动态获取客户端数值
+const fps = 60 // 每秒X帧  ==> 应动态获取客户端数值
+
+const timesPerSecond = 10 // 一秒执行X次
 
 const runningFlag = ref(true) // 用于判断是否继续执行
 const frameCount = ref(0) // 表示第几帧
 
 const canvasRef = ref(null)
 
+let canvasInstance = null
+
 onMounted(() => {
   // var canvas = document.getElementById('MyCanvas')
-  console.log(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight)
+
+  // console.log(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight)
   canvasRef.value.width = canvasRef.value.offsetWidth
   canvasRef.value.height = canvasRef.value.offsetHeight
 
-  const ctx = canvasRef.value.getContext('2d')
+  // const ctx = canvasRef.value.getContext('2d')
+
+  canvasInstance = new Canvas(canvasRef.value)
 
   // {animationTime}秒后将 执行标志位置为false
-  setTimeout(() => (runningFlag.value = false), animationTime * 1000)
+  if (animationTime > 0)
+    setTimeout(() => (runningFlag.value = false), animationTime * 1000)
 
   console.time('frameTime')
   // let executingTimeStart = 0
@@ -37,9 +45,9 @@ onMounted(() => {
       // !executingTimeStart && (executingTimeStart = t)
 
       // 更新每个小球的状态
-      balls.update(canvasRef.value.width, canvasRef.value.height)
+      canvasInstance.updateBalls()
 
-      if (balls.balls.length > 0) {
+      if (canvasInstance.balls.balls.length > 0) {
         // console.log(
         //   balls.balls[0].pos.x,
         //   balls.balls[0].pos.y,
@@ -50,22 +58,27 @@ onMounted(() => {
       }
 
       // 每60帧(fps) （约等于每一秒）执行的逻辑
-      if (frameCount.value % fps === 0) {
+      if (frameCount.value % (fps / timesPerSecond) === 0) {
         console.timeLog('frameTime')
 
         // 判断是否要添加小球
-        if (balls.balls.length < ballCount) {
+        if (canvasInstance.balls.balls.length < ballCount) {
           // 添加一个小球
-          balls.add()
+          canvasInstance.addBall()
           // console.log('add a ball')
         }
         // console.log({ balls })
       }
 
       // 清空画布
-      ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
+      canvasInstance.ctx.clearRect(
+        0,
+        0,
+        canvasRef.value.width,
+        canvasRef.value.height
+      )
       // 绘制当前状态下的小球
-      paintBalls(ctx, balls.balls)
+      canvasInstance.paintBalls()
 
       frameCount.value++
 
@@ -94,7 +107,8 @@ onMounted(() => {
       "
     >
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
-      {{ balls.balls.length }} <br />
+      {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
+      {{ canvasRef ? canvasInstance.ctx : 'sdad' }}
       {{
         canvasRef
           ? canvasRef.offsetWidth +
@@ -115,7 +129,7 @@ onMounted(() => {
         width: 100%;
         /* height: 100vh; */
         border: 1px solid #000;
-        background-color: #00800033;
+        background-color: #33803333;
       "
       width="800"
       height="400"
@@ -124,3 +138,4 @@ onMounted(() => {
     ></canvas>
   </div>
 </template>
+./ballCanvas.js
