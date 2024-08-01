@@ -10,7 +10,4 @@ echo '== 开始项目构建'
 echo '** @dodomogu/demo_animation'
 pnpm -F @dodomogu/demo_animation build
 
-echo '** @dodomogu/dodomogu.com-blog'
-pnpm -F @dodomogu/dodomogu.com-blog docs:build
-
 echo '脚本执行完毕'

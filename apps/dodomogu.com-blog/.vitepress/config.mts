@@ -15,6 +15,7 @@ export default ({ mode }) => {
   }
   return defineConfig({
     srcDir: 'docs',
+    outDir: './public',
     cleanUrls: true,
     title: 'doDomoGu',
     description: "doDomoGu's Blog",
