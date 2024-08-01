@@ -106,7 +106,7 @@ onMounted(() => {
         font-size: 0.75rem;
       "
     >
-      {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
+      {{ runningFlag ? '执行中[测试]' : '执行结束' }} | {{ frameCount }} |
       {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
       {{ canvasRef ? canvasInstance.ctx : 'sdad' }}
       {{
