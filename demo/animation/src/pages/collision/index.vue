@@ -95,7 +95,17 @@ onMounted(() => {
     >
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
       {{ balls.balls.length }} <br />
-      {{ canvasRef ? canvasRef.offsetWidth + '|' + canvasRef.offsetWidth : '' }}
+      {{
+        canvasRef
+          ? canvasRef.offsetWidth +
+            '|' +
+            canvasRef.offsetHeight +
+            '|' +
+            canvasRef.width +
+            '|' +
+            canvasRef.height
+          : ''
+      }}
     </div>
     <canvas
       style="
