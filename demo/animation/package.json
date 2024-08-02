@@ -7,13 +7,18 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "devDependencies": {
+    "@dodomogu/dev-configs": "workspace:^",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.3.4"
+  },
   "dependencies": {
     "@catsums/vector2": "^1.3.3",
     "uuid": "^9.0.1",
-    "vue": "^3.4.31"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.5",
-    "vite": "^5.3.4"
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.2"
   }
 }
