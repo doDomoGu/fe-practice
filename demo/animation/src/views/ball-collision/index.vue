@@ -22,90 +22,75 @@ const canvasRef = ref(null)
 let canvasInstance = null
 
 onMounted(() => {
-  // var canvas = document.getElementById('MyCanvas')
+  if (canvasRef.value) {
+    canvasRef.value.width = canvasRef.value.offsetWidth
+    canvasRef.value.height = canvasRef.value.offsetHeight
 
-  // console.log(canvasRef.value.offsetWidth, canvasRef.value.offsetHeight)
-  canvasRef.value.width = canvasRef.value.offsetWidth
-  canvasRef.value.height = canvasRef.value.offsetHeight
+    canvasInstance = new Canvas(canvasRef.value)
 
-  // const ctx = canvasRef.value.getContext('2d')
+    // {animationTime}秒后将 执行标志位置为false
+    if (animationTime > 0)
+      setTimeout(() => (runningFlag.value = false), animationTime * 1000)
 
-  canvasInstance = new Canvas(canvasRef.value)
+    console.time('frameTime')
+    // let executingTimeStart = 0
 
-  // {animationTime}秒后将 执行标志位置为false
-  if (animationTime > 0)
-    setTimeout(() => (runningFlag.value = false), animationTime * 1000)
+    const run = (t) => {
+      // 判断是否继续执行
+      if (runningFlag.value) {
+        // !executingTimeStart && (executingTimeStart = t)
 
-  console.time('frameTime')
-  // let executingTimeStart = 0
+        // 更新每个小球的状态
+        canvasInstance.updateBalls()
 
-  const run = (t) => {
-    // 判断是否继续执行
-    if (runningFlag.value) {
-      // !executingTimeStart && (executingTimeStart = t)
-
-      // 更新每个小球的状态
-      canvasInstance.updateBalls()
-
-      if (canvasInstance.balls.balls.length > 0) {
-        // console.log(
-        //   balls.balls[0].pos.x,
-        //   balls.balls[0].pos.y,
-        //   balls.balls[0].velocity.x,
-        //   balls.balls[0].velocity.y
-        // )
-        // console.log(balls.balls[0])
-      }
-
-      // 每60帧(fps) （约等于每一秒）执行的逻辑
-      if (frameCount.value % (fps / timesPerSecond) === 0) {
-        console.timeLog('frameTime')
-
-        // 判断是否要添加小球
-        if (canvasInstance.balls.balls.length < ballCount) {
-          // 添加一个小球
-          canvasInstance.addBall()
-          // console.log('add a ball')
+        if (canvasInstance.balls.balls.length > 0) {
+          // console.log(
+          //   balls.balls[0].pos.x,
+          //   balls.balls[0].pos.y,
+          //   balls.balls[0].velocity.x,
+          //   balls.balls[0].velocity.y
+          // )
+          // console.log(balls.balls[0])
         }
-        // console.log({ balls })
+
+        // 每60帧(fps) （约等于每一秒）执行的逻辑
+        if (frameCount.value % (fps / timesPerSecond) === 0) {
+          console.timeLog('frameTime')
+
+          // 判断是否要添加小球
+          if (canvasInstance.balls.balls.length < ballCount) {
+            // 添加一个小球
+            canvasInstance.addBall()
+            // console.log('add a ball')
+          }
+          // console.log({ balls })
+        }
+
+        // 清空画布
+        canvasInstance.ctx.clearRect(
+          0,
+          0,
+          canvasRef.value.width,
+          canvasRef.value.height
+        )
+        // 绘制当前状态下的小球
+        canvasInstance.paintBalls()
+
+        frameCount.value++
+
+        requestAnimationFrame(run)
+      } else {
+        console.timeEnd('frameTime')
       }
-
-      // 清空画布
-      canvasInstance.ctx.clearRect(
-        0,
-        0,
-        canvasRef.value.width,
-        canvasRef.value.height
-      )
-      // 绘制当前状态下的小球
-      canvasInstance.paintBalls()
-
-      frameCount.value++
-
-      requestAnimationFrame(run)
-    } else {
-      console.timeEnd('frameTime')
     }
+    setTimeout(() => run(), 100)
   }
-
-  // context.arc(x, y, radius, startAngle, endAngle, anticlockwise);
-
-  setTimeout(() => run(), 100)
 })
 </script>
 
 <template>
-  <div style="width: 100%; height: 100%; display: flex; flex-direction: column">
-    <div
-      style="
-        height: 2rem;
-        line-height: 1rem;
-        flex: none;
-        width: 100%;
-        text-align: center;
-        font-size: 0.75rem;
-      "
-    >
+  <div class="w-full h-full p-8 flex flex-col">
+    <div class="h-16 text-xl flex-none w-full text-center">
       {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
       {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
       {{
@@ -120,21 +105,14 @@ onMounted(() => {
           : ''
       }}
     </div>
-    <canvas
-      style="
-        box-sizing: border-box;
-        flex: 1;
-        overflow: hidden;
-        width: 100%;
-        /* height: 100vh; */
-        border: 1px solid #000;
-        background-color: #33803333;
-      "
-      width="800"
-      height="400"
-      id="MyCanvas"
-      ref="canvasRef"
-    ></canvas>
+    <div class="flex-1 w-full overflow-hidden">
+      <canvas
+        class="w-full h-full border border-slate-800 bg-teal-700"
+        width="800"
+        height="400"
+        id="MyCanvas"
+        ref="canvasRef"
+      />
+    </div>
   </div>
 </template>
-./ballCanvas.js
