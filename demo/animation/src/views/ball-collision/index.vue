@@ -1,14 +1,18 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-// import { Vector2 } from '@catsums/vector2'
-// import Balls from './ball.js'
+import { Vector2 } from '@catsums/vector2'
+// import { Ball } from './ball.js'
 import Canvas from './ballCanvas.js'
+
+// const ball = new Ball({ id: 1 })
+// const ball2 = new Ball({ id: 2 })
+// console.log(ball, ball2)
 
 // const balls = new Balls()
 
-const ballCount = 250 // 生成多少球  debug只添加一个球
+const ballCount = 50 // 生成多少球  debug只添加一个球
 
-const animationTime = -1 // 动画执行时长 单位（秒）  -1: 一直执行下去
+const animationTime = 10 // 动画执行时长 单位（秒）  -1: 一直执行下去
 
 const fps = 60 // 每秒X帧  ==> 应动态获取客户端数值
 
@@ -20,13 +24,29 @@ const frameCount = ref(0) // 表示第几帧
 const canvasRef = ref(null)
 
 let canvasInstance = null
+// const base = new Vector2(0, 0)
+// const vec1 = new Vector2(1, 2)
+// const velocity = new Vector2(4, -3)
+// const vec2 = Vector2.ADD(vec1, velocity) // 3, -1
+// console.log(vec1)
+// console.log(velocity)
+// console.log(vec2)
+
+// console.log(
+//   (Math.abs(vec1.y) * Math.abs(vec2.x - vec1.x)) / Math.abs(vec2.y - vec1.y)
+// )
+// console.log((vec1.angleTo(base) / Math.PI) * 180)
 
 onMounted(() => {
   if (canvasRef.value) {
     canvasRef.value.width = canvasRef.value.offsetWidth
     canvasRef.value.height = canvasRef.value.offsetHeight
 
-    canvasInstance = new Canvas(canvasRef.value)
+    canvasInstance = new Canvas({
+      ctx: canvasRef.value.getContext('2d'),
+      width: canvasRef.value.width,
+      height: canvasRef.value.height
+    })
 
     // {animationTime}秒后将 执行标志位置为false
     if (animationTime > 0)
@@ -35,7 +55,7 @@ onMounted(() => {
     console.time('frameTime')
     // let executingTimeStart = 0
 
-    const run = (t) => {
+    const run = () => {
       // 判断是否继续执行
       if (runningFlag.value) {
         // !executingTimeStart && (executingTimeStart = t)
@@ -43,15 +63,15 @@ onMounted(() => {
         // 更新每个小球的状态
         canvasInstance.updateBalls()
 
-        if (canvasInstance.balls.balls.length > 0) {
-          // console.log(
-          //   balls.balls[0].pos.x,
-          //   balls.balls[0].pos.y,
-          //   balls.balls[0].velocity.x,
-          //   balls.balls[0].velocity.y
-          // )
-          // console.log(balls.balls[0])
-        }
+        // if (canvasInstance.balls.balls.length > 0) {
+        //   console.log(
+        //     balls.balls[0].coordinate.x,
+        //     balls.balls[0].coordinate.y,
+        //     balls.balls[0].velocity.x,
+        //     balls.balls[0].velocity.y
+        //   )
+        //   console.log(balls.balls[0])
+        // }
 
         // 每60帧(fps) （约等于每一秒）执行的逻辑
         if (frameCount.value % (fps / timesPerSecond) === 0) {
@@ -67,12 +87,8 @@ onMounted(() => {
         }
 
         // 清空画布
-        canvasInstance.ctx.clearRect(
-          0,
-          0,
-          canvasRef.value.width,
-          canvasRef.value.height
-        )
+        canvasInstance.clear()
+
         // 绘制当前状态下的小球
         canvasInstance.paintBalls()
 
@@ -91,7 +107,7 @@ onMounted(() => {
 <template>
   <div class="w-full h-full p-8 flex flex-col">
     <div class="h-16 text-xl flex-none w-full text-center">
-      {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
+      {{ runningFlag ? 'test执行中' : '执行结束' }} | {{ frameCount }} |
       {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
       {{
         canvasRef
