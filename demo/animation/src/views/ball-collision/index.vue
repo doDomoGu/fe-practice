@@ -1,18 +1,18 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { Vector2 } from '@catsums/vector2'
+// import { Vector2 } from '@catsums/vector2'
 // import { Ball } from './ball.js'
-import Canvas from './ballCanvas.js'
+// import Canvas from './ballCanvas.js'
 
-// const ball = new Ball({ id: 1 })
-// const ball2 = new Ball({ id: 2 })
-// console.log(ball, ball2)
+import Collection from '@/models/collection'
+import Ball from '@/models/2d/ball'
+import Canvas from '@/models/2d/canvas'
 
-// const balls = new Balls()
+const balls = new Collection(Ball)
 
-const ballCount = 50 // 生成多少球  debug只添加一个球
+const ballMaxNum = 100 // 最多生成多少小球
 
-const animationTime = 10 // 动画执行时长 单位（秒）  -1: 一直执行下去
+const animationTime = 300 // 动画执行时长 单位（秒）  -1: 一直执行下去
 
 const fps = 60 // 每秒X帧  ==> 应动态获取客户端数值
 
@@ -24,29 +24,17 @@ const frameCount = ref(0) // 表示第几帧
 const canvasRef = ref(null)
 
 let canvasInstance = null
-// const base = new Vector2(0, 0)
-// const vec1 = new Vector2(1, 2)
-// const velocity = new Vector2(4, -3)
-// const vec2 = Vector2.ADD(vec1, velocity) // 3, -1
-// console.log(vec1)
-// console.log(velocity)
-// console.log(vec2)
-
-// console.log(
-//   (Math.abs(vec1.y) * Math.abs(vec2.x - vec1.x)) / Math.abs(vec2.y - vec1.y)
-// )
-// console.log((vec1.angleTo(base) / Math.PI) * 180)
 
 onMounted(() => {
   if (canvasRef.value) {
     canvasRef.value.width = canvasRef.value.offsetWidth
     canvasRef.value.height = canvasRef.value.offsetHeight
 
-    canvasInstance = new Canvas({
-      ctx: canvasRef.value.getContext('2d'),
-      width: canvasRef.value.width,
-      height: canvasRef.value.height
-    })
+    // 创建画布实例
+    canvasInstance = new Canvas(canvasRef.value)
+
+    // 往画布实例中添加balls精灵对象
+    canvasInstance.addSprite(balls)
 
     // {animationTime}秒后将 执行标志位置为false
     if (animationTime > 0)
@@ -60,8 +48,9 @@ onMounted(() => {
       if (runningFlag.value) {
         // !executingTimeStart && (executingTimeStart = t)
 
-        // 更新每个小球的状态
-        canvasInstance.updateBalls()
+        // 更新每个精灵对象的状态
+        canvasInstance.update()
+        // balls.update(ctx)
 
         // if (canvasInstance.balls.balls.length > 0) {
         //   console.log(
@@ -75,12 +64,12 @@ onMounted(() => {
 
         // 每60帧(fps) （约等于每一秒）执行的逻辑
         if (frameCount.value % (fps / timesPerSecond) === 0) {
-          console.timeLog('frameTime')
+          // console.timeLog('frameTime')
 
           // 判断是否要添加小球
-          if (canvasInstance.balls.balls.length < ballCount) {
+          if (balls.collection.length < ballMaxNum) {
             // 添加一个小球
-            canvasInstance.addBall()
+            balls.add({ id: balls.length })
             // console.log('add a ball')
           }
           // console.log({ balls })
@@ -89,8 +78,8 @@ onMounted(() => {
         // 清空画布
         canvasInstance.clear()
 
-        // 绘制当前状态下的小球
-        canvasInstance.paintBalls()
+        // 绘制画布
+        canvasInstance.paint()
 
         frameCount.value++
 
@@ -108,7 +97,8 @@ onMounted(() => {
   <div class="w-full h-full p-8 flex flex-col">
     <div class="h-16 text-xl flex-none w-full text-center">
       {{ runningFlag ? 'test执行中' : '执行结束' }} | {{ frameCount }} |
-      {{ canvasInstance ? canvasInstance.balls.balls.length : '--' }} <br />
+      {{ canvasInstance ? canvasInstance.sprites[0].collection.length : '--' }}
+      <br />
       {{
         canvasRef
           ? canvasRef.offsetWidth +
