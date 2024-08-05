@@ -29,7 +29,8 @@ onMounted(() => {
   if (canvasRef.value) {
     canvasRef.value.width = canvasRef.value.offsetWidth
     canvasRef.value.height = canvasRef.value.offsetHeight
-
+    // console.log('window', window.innerWidth, window.innerHeight)
+    // console.log('canvas', canvasRef.value.width, canvasRef.value.height)
     // 创建画布实例
     canvasInstance = new Canvas(canvasRef.value)
 
@@ -96,7 +97,7 @@ onMounted(() => {
 <template>
   <div class="w-full h-full p-8 flex flex-col">
     <div class="h-16 text-xl flex-none w-full text-center">
-      {{ runningFlag ? 'test执行中' : '执行结束' }} | {{ frameCount }} |
+      {{ runningFlag ? '执行中' : '执行结束' }} | {{ frameCount }} |
       {{ canvasInstance ? canvasInstance.sprites[0].collection.length : '--' }}
       <br />
       {{

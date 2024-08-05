@@ -5,7 +5,13 @@
 *::-webkit-scrollbar {
   @apply hidden;
 }
+html,
+body,
+#app {
+  @apply w-full h-full;
+}
+
 #app,
 #root {
-  @apply bg-app-bg text-app-text dark:bg-app-bg-dark dark:text-app-text-dark w-screen h-screen;
+  @apply bg-app-bg text-app-text dark:bg-app-bg-dark dark:text-app-text-dark;
 }
