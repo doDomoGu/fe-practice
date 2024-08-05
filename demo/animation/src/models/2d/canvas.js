@@ -1,15 +1,17 @@
 // import Balls from './ball.js'
 
 export default class Canvas {
+  sprites = []
+  animating = true // 是否正在执行动画效果的标志位
+  frame = 0 // 当前帧数
+
   constructor(canvas) {
     this.canvas = canvas
     this.ctx = canvas.getContext('2d')
     this.width = canvas.width
     this.height = canvas.height
 
-    this.sprites = []
-    // this.balls = new Balls()
-
+    // this.maxFrame =
     // this.contentHistory = [] // 记录经过的每一帧的数据
     // this.maxHistoryCount = 10000 // 最多记录10000
     // this.curFrameNum = 0 // 当前帧数
@@ -37,19 +39,19 @@ export default class Canvas {
     })
   }
 
-  // // 增加一个小球，ID自增
-  // addBall() {
-  //   this.balls.add({ id: this.balls.length })
-  // }
+  pause() {
+    this.animating = false
+  }
 
-  // //
-  // updateBalls() {
-  //   this.balls.update({ width: this.width, height: this.height })
-  // }
+  play() {
+    this.animating = true
+  }
 
-  // paintBalls() {
-  //   this.balls.balls.map((v) => {
-  //     this.paintCricle(v)
-  //   })
-  // }
+  stop(delay = -1) {
+    if (delay > -1) {
+      setTimeout(() => {
+        this.animating = false
+      }, delay * 1000)
+    }
+  }
 }

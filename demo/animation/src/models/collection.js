@@ -1,12 +1,17 @@
 export default class Collection {
   collection = []
 
-  constructor(classObj) {
+  constructor(classObj, maxCount = 1000) {
     this.classObj = classObj
+    this.maxCount = maxCount
   }
 
   add() {
-    this.collection.push(new this.classObj(...arguments))
+    // 判断是否要添加
+    if (this.collection.length >= this.maxCount) return
+    this.collection.push(
+      new this.classObj({ ...arguments[0], id: this.collection.length })
+    )
   }
 
   update(ctx) {
