@@ -12,7 +12,7 @@ const balls = new Collection(Ball)
 
 const ballMaxNum = 100 // 最多生成多少小球
 
-const animationTime = 300 // 动画执行时长 单位（秒）  -1: 一直执行下去
+const animationTime = 600 // 动画执行时长 单位（秒）  -1: 一直执行下去
 
 const fps = 60 // 每秒X帧  ==> 应动态获取客户端数值
 

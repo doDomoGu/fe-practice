@@ -5,6 +5,7 @@ import { paintCricle, checkCricleBorderCollision } from './canvasApi'
 export default class Ball {
   color = `#${uuidv4().slice(0, 6)}` // 绘制的颜色
   velocity = new Vector2(1 + 1 * Math.random(), 1 + 1 * Math.random()) // 速度向量
+  // velocity = new Vector2(1.3, 1.2) // 速度向量
 
   constructor({ x = 8, y = 8, radius = 8, id }) {
     this.id = id
@@ -19,7 +20,6 @@ export default class Ball {
     })
     this.velocity = velocity
     this.coordinate = coordinate
-    // this.coordinate.add(this.velocity)
   }
 
   paint(ctx) {
