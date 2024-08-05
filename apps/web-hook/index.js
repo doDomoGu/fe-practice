@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   // console.log(payload)
   sha.update(JSON.stringify(payload))
   const createdSignature = `sha256=${sha.digest('hex')}`
-  // console.log({ createdSignature })
+  // console.log({ signature, createdSignature })
   if (signature !== createdSignature) {
     return res.sendStatus(403)
   }
@@ -55,10 +55,14 @@ app.post('/', (req, res) => {
     // 响应GitHub的ping事件
     res.status(200).send('PONG')
   } else if (event === 'push') {
-    run_cmd('sh', ['../../deploy.sh'], function (text) {
-      console.log('result', text)
-    })
-    res.status(200).send('push Deployed received')
+    if (req.body.ref.includes('master')) {
+      run_cmd('sh', ['../../deploy.sh'], function (text) {
+        console.log('result', text)
+      })
+      res.status(200).send('push master Deployed received')
+    } else {
+      res.status(200).send('push received not deploy')
+    }
   } else {
     // 处理其他事件
     console.log(event, req.body)
