@@ -13,7 +13,10 @@ export default class Canvas {
   frame = 0 // 当前帧数
   fps = 60 // 每秒X帧  ==> 应动态获取客户端数值
   timesPerSecond = 10 // 一秒执行X次
-  animationTime = -1 // 动画执行时长 单位（秒）  -1: 一直执行下去
+  duration = -1 // 动画执行时长 单位（秒）  -1: 一直执行下去
+  totalFrame = -1 // 总帧数 = fps(每秒帧数) * duration(动画持续时间(秒))
+  history = [] // 记录经过的每一帧的数据
+  historyMaxCount = 10000 // 最多记录x帧的数据
 
   constructor(canvas, options) {
     canvas.width = canvas.offsetWidth
@@ -24,17 +27,11 @@ export default class Canvas {
     this.width = canvas.width
     this.height = canvas.height
 
-    options.animationTime && (this.animationTime = options.animationTime)
+    options.duration && (this.duration = options.duration)
 
-    // totalFrame: 总帧数 = fps(每秒帧数) * animationTime(动画持续时间(秒))
-    this.totalFrame =
-      this.animationTime > -1 ? this.fps * this.animationTime : -1
+    this.totalFrame = this.duration > -1 ? this.fps * this.duration : -1
 
-    // this.contentHistory = [] // 记录经过的每一帧的数据
-    // this.maxHistoryCount = 10000 // 最多记录10000
-    // this.curFrameNum = 0 // 当前帧数
-
-    // console.log(this.totalFrame)
+    options.historyMaxCount && (this.historyMaxCount = options.historyMaxCount)
   }
 
   // 添加精灵对象
@@ -54,22 +51,39 @@ export default class Canvas {
   }
 
   paint() {
+    this.snapshot()
     this.sprites.map((v) => {
       v.paint(this.ctx)
     })
   }
 
-  pause() {
-    this.status = STATUS.PAUSED
+  snapshot() {
+    this.history.push({
+      frame: this.frame,
+      sprites: JSON.parse(JSON.stringify(this.sprites))
+    })
+  }
+
+  start() {
+    this.status = STATUS.PLAYING
+    this.frame = 0
   }
 
   play() {
     this.status = STATUS.PLAYING
   }
 
+  pause() {
+    this.status = STATUS.PAUSED
+  }
+
   stop() {
     this.status = STATUS.STOPPED
   }
+
+  // restart() {
+
+  // }
 
   get statusCn() {
     switch (this.status) {
@@ -98,7 +112,7 @@ export default class Canvas {
 
   // 动作执行帧
   isActionFrame() {
-    return this.frame % (this.fps / this.timesPerSecond) === 0
+    return this.frame % (this.fps / this.timesPerSecond) === 1
   }
 
   isFrameExceed() {

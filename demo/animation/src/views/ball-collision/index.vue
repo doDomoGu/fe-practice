@@ -8,6 +8,9 @@ import Canvas from '@/models/2d/canvas'
 
 const balls = new Collection(Ball, 100) // 最多生成X个小球
 
+const canvasInstanceParams = {
+  duration: 6 // 动画执行时长 单位（秒）  -1: 一直执行下去
+}
 const canvasRef = ref(null)
 
 const canvasInstance = ref(null)
@@ -15,9 +18,7 @@ const canvasInstance = ref(null)
 onMounted(() => {
   if (canvasRef.value) {
     // 创建画布实例
-    canvasInstance.value = new Canvas(canvasRef.value, {
-      animationTime: 20 // 动画执行时长 单位（秒）  -1: 一直执行下去
-    })
+    canvasInstance.value = new Canvas(canvasRef.value, canvasInstanceParams)
 
     // 往画布实例中添加balls精灵对象
     canvasInstance.value.addSprite(balls)
@@ -25,6 +26,8 @@ onMounted(() => {
     const run = () => {
       // 判断是否继续执行
       if (canvasInstance.value.isPlaying) {
+        canvasInstance.value.frame++
+
         // 更新每个精灵对象的状态
         canvasInstance.value.update()
 
@@ -39,22 +42,21 @@ onMounted(() => {
 
         // 绘制画布
         canvasInstance.value.paint()
-
-        // 超出最大帧数时停止执行
-        if (canvasInstance.value.isFrameExceed()) {
-          canvasInstance.value.stop()
-          return
-        }
-
-        canvasInstance.value.frame++
       }
 
-      requestAnimationFrame(run)
+      // 超出最大帧数时停止执行
+      if (canvasInstance.value.isFrameExceed()) {
+        canvasInstance.value.stop()
+        console.log('history')
+        console.log(canvasInstance.value.history)
+      } else {
+        requestAnimationFrame(run)
+      }
     }
     setTimeout(() => {
-      canvasInstance.value.play()
-      run()
-    }, 100)
+      canvasInstance.value.start()
+      requestAnimationFrame(run)
+    }, 0)
   }
 })
 
@@ -91,9 +93,9 @@ const handleAnimate = () => {
           </div>
           <div class="w-[120px] px-1 mx-2">
             <button
-              class="border px-2"
+              class="border px-2 hover:bg-slate-600 hover:cursor-pointer"
               @click="handleAnimate"
-              :disabled="canvasInstance.isStopped"
+              v-show="!canvasInstance.isStopped"
             >
               {{ canvasInstance.isPlaying ? '暂停' : '播放' }}
             </button>
