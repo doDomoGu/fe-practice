@@ -16,7 +16,7 @@ export default {
       },
       fontFamily: {
         text: 'PingFang',
-        number: 'Arial'
+        number: 'Consolas, Menlo, Arial'
       }
       //   colors: {
       //     ...blackA,
