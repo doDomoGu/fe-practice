@@ -18,14 +18,14 @@ export default class Canvas {
   history = [] // 记录经过的每一帧的数据
   historyMaxCount = 10000 // 最多记录x帧的数据
 
-  constructor(canvas, options) {
-    canvas.width = canvas.offsetWidth
-    canvas.height = canvas.offsetHeight
+  constructor(ctx, options) {
+    ctx.canvas.width = ctx.canvas.offsetWidth
+    ctx.canvas.height = ctx.canvas.offsetHeight
 
-    this.canvas = canvas
-    this.ctx = canvas.getContext('2d')
-    this.width = canvas.width
-    this.height = canvas.height
+    // this.canvas = canvas
+    this.ctx = ctx // canvas.getContext('2d')
+    this.width = ctx.canvas.width
+    this.height = ctx.canvas.height
 
     options.duration && (this.duration = options.duration)
 

@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@catsums/vector2": "^1.3.3",
+    "@dodomogu/ui-vue": "workspace:^",
     "uuid": "^9.0.1",
     "vue": "^3.4.31",
     "vue-router": "^4.4.2"

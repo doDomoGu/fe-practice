@@ -18,7 +18,10 @@ const canvasInstance = ref(null)
 onMounted(() => {
   if (canvasRef.value) {
     // 创建画布实例
-    canvasInstance.value = new Canvas(canvasRef.value, canvasInstanceParams)
+    canvasInstance.value = new Canvas(
+      canvasRef.value.getContext('2d'),
+      canvasInstanceParams
+    )
 
     // 往画布实例中添加balls精灵对象
     canvasInstance.value.addSprite(balls)
@@ -69,31 +72,27 @@ const handleAnimate = () => {
   }
 }
 
+const sliderValue = ref([0])
+const handleUpdate = (v) => {
+  console.log('handleUpdate', v)
+}
 // https://blog.csdn.net/liudonglovehemin/article/details/137507068
 </script>
 
 <template>
-  <div class="w-full h-full p-8 flex flex-col">
-    <div class="h-16 text-base flex-none w-full text-center overflow-hidden">
+  <div class="w-full h-full p-[16px] flex flex-col">
+    <div
+      class="h-16 text-xs flex-none bg-slate-600 overflow-hidden p-[8px] box-content"
+    >
       <template v-if="canvasInstance">
-        <div class="flex justify-center">
-          <div class="w-[100px] px-1 mx-2 text-right border border-slate-300">
-            {{ canvasInstance.statusCn }}
+        <div class="flex bg-slate-500">
+          <div class="flex-1 h-6 leading-6 px-1 overflow-hidden">
+            <!-- {{ canvasInstance.history.length }} -->
+            状态: {{ canvasInstance.statusCn }}
           </div>
-          <div
-            class="w-[140px] px-1 mx-2 text-right border border-slate-300 font-number"
-          >
-            {{ canvasInstance.frame }} / {{ canvasInstance.totalFrame }}
-          </div>
-          <div
-            class="w-[120px] px-1 mx-2 text-right border border-slate-300 font-number"
-          >
-            {{ balls.collection.length }}
-            / {{ balls.maxCount }}
-          </div>
-          <div class="w-[120px] px-1 mx-2">
+          <div class="flex-1 h-6 leading-6 px-1 overflow-hidden">
             <button
-              class="border px-2 hover:bg-slate-600 hover:cursor-pointer"
+              class="border h-5 leading-5 px-2 hover:bg-slate-600 hover:cursor-pointer"
               @click="handleAnimate"
               v-show="!canvasInstance.isStopped"
             >
@@ -101,9 +100,18 @@ const handleAnimate = () => {
             </button>
           </div>
         </div>
-
+        <div class="flex bg-slate-500">
+          <div class="flex-1 h-6 leading-6 px-1 font-number overflow-hidden">
+            播放帧数: {{ canvasInstance.frame }} /
+            {{ canvasInstance.totalFrame }}
+          </div>
+          <div class="flex-1 h-6 leading-6 px-1 font-number overflow-hidden">
+            小球数量: {{ balls.collection.length }} / {{ balls.maxCount }}
+          </div>
+        </div>
         <div>
-          {{
+          <!-- <DgSlider v-model="sliderValue" @update:modelValue="handleUpdate" /> -->
+          <!-- {{
             canvasInstance.canvas.offsetWidth +
             ' - ' +
             canvasInstance.canvas.offsetHeight +
@@ -111,7 +119,7 @@ const handleAnimate = () => {
             canvasInstance.canvas.width +
             ' - ' +
             canvasInstance.canvas.height
-          }}
+          }} -->
         </div>
       </template>
     </div>
