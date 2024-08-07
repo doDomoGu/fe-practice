@@ -26,6 +26,13 @@ onMounted(() => {
     // 往画布实例中添加balls精灵对象
     canvasInstance.value.addSprite(balls)
 
+    watch(
+      () => canvasInstance.value.history.length,
+      (v) => {
+        sliderValue.value = [canvasInstance.value.history.length]
+      }
+    )
+
     const run = () => {
       // 判断是否继续执行
       if (canvasInstance.value.isPlaying) {
@@ -73,8 +80,14 @@ const handleAnimate = () => {
 }
 
 const sliderValue = ref([0])
+
 const handleUpdate = (v) => {
   console.log('handleUpdate', v)
+  if (canvasInstance.value) {
+    console.log(v[0], canvasInstance.value.history[v[0]])
+    // canvasInstance.value.clear()
+    // canvasInstance.value.paint()
+  }
 }
 // https://blog.csdn.net/liudonglovehemin/article/details/137507068
 </script>
@@ -98,6 +111,7 @@ const handleUpdate = (v) => {
             >
               {{ canvasInstance.isPlaying ? '暂停' : '播放' }}
             </button>
+            历史 {{ sliderValue[0] }} / {{ canvasInstance.history.length }}
           </div>
         </div>
         <div class="flex bg-slate-500">
@@ -109,8 +123,12 @@ const handleUpdate = (v) => {
             小球数量: {{ balls.collection.length }} / {{ balls.maxCount }}
           </div>
         </div>
-        <div>
-          <!-- <DgSlider v-model="sliderValue" @update:modelValue="handleUpdate" /> -->
+        <div v-show="!canvasInstance.isPlaying">
+          <DgSlider
+            v-model="sliderValue"
+            @update:modelValue="handleUpdate"
+            :max="canvasInstance.history.length"
+          />
           <!-- {{
             canvasInstance.canvas.offsetWidth +
             ' - ' +

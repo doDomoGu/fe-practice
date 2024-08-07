@@ -1,4 +1,5 @@
 // import { blackA, green, grass, mauve } from '@radix-ui/colors'
+const { blackA } = require('@radix-ui/colors')
 const path = require('path')
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -13,6 +14,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        ...blackA,
         'app-bg': '#ffffff',
         'app-text': '#333333',
         'app-bg-dark': '#273444',
