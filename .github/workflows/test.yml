@@ -28,8 +28,8 @@ jobs:
           # User for remote connection
           username: ${{ vars.SERVER_USER }}    #阿里云用户
           # Password for the user
-          #password: # optional
+          password: ${{ secrets.SERVER_PWD }}
           # Private SSH key
-          key: ${{ secrets.PRIVATE_KEY }}  #这个是阿里云的私钥
+          #key: ${{ secrets.PRIVATE_KEY }}  #这个是阿里云的私钥
           # Passphrase for SSH key
           #passphrase: # optional
