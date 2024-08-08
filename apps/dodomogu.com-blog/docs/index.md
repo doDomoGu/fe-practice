@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "44444Web-frontend-learning-notes"
+  name: "Yes-Web-frontend-learning-notes"
   text: "A VitePress Site33"
   tagline: My great project tagline3
   actions:
