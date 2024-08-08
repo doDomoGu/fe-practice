@@ -5,9 +5,9 @@ name: Deploy dodomogu.com-blog vitepress
 
 on:
   push:
-    branches: [dodomogu.com-blog]
+    branches: [ "release/dodomogu.com" ]
     
-  workflow_dispatch:
+  #workflow_dispatch:
 
 jobs:
   build:
