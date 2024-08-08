@@ -5,9 +5,9 @@ name: Deploy dodomogu.com-blog vitepress
 
 on:
   push:
-    branches: [ "release/dodomogu.com" ]
-    
-  #workflow_dispatch:
+    branches: ['release/dodomogu.com']
+
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,13 +17,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: release/dodomogu.com
-          
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
           run_install: false
-          
+
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
@@ -32,14 +32,14 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-      
+
       - name: Build && zip
         run: |
           pnpm -F @dodomogu/dodomogu.com-blog docs:build
           cd ./apps/dodomogu.com-blog/.vitepress
           ls -al ./dist
           tar -zcvf dist.tar.gz ./dist
-          
+
       - name: ssh-scp-ssh-pipelines
         # You may pin to the exact commit or the version.
         # uses: cross-the-world/ssh-scp-ssh-pipelines@78e864b4890087a58248ff39320406971ca88b89
@@ -67,4 +67,3 @@ jobs:
             cd /www/html/dodomogu-blog/
             rm -rf dist
             tar -zxvf dist.tar.gz
-          
