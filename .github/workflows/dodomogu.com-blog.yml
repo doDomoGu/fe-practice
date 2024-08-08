@@ -57,7 +57,7 @@ jobs:
           #first_ssh: # optional
           # scp from local to remote
           scp: |
-            './apps/dodomogu.com/blog/.vitepress/dist/*' => /www/html/dodomogu-blog/
+            './apps/dodomogu.com-blog/.vitepress/dist/*' => /www/html/dodomogu-blog/
           # execute post-commands after scp
           #last_ssh: |
           #  ls -al /www/html/dodomogu-blog/
