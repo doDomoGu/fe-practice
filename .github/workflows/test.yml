@@ -26,9 +26,9 @@ jobs:
           # ssh remote user
           user: ${{vars.SERVER_USER}}
           # content of ssh private key. ex raw content of ~/.ssh/id_rsa
-          key: ${{secrets.PRIVATE_KEY}} # optional
+          #key: ${{secrets.PRIVATE_KEY}} # optional
           # ssh remote password
-          #pass: # optional
+          pass: ${{secrets.SERVER_PWD}} # optional
           # connection timeout to remote host
           #connect_timeout: # optional, default is 30s
           # execute pre-commands before scp
