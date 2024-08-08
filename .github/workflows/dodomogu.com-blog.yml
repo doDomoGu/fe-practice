@@ -28,8 +28,6 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-     
-
       - name: Install dependencies
         run: pnpm install
       
@@ -37,29 +35,30 @@ jobs:
         run: |
           pnpm -F @dodomogu/dodomogu.com-blog docs:build
           ls -al ./apps/dodomogu.com-blog/.vitepress/dist
-      #- name: ssh-scp-ssh-pipelines
+          
+      - name: ssh-scp-ssh-pipelines
         # You may pin to the exact commit or the version.
         # uses: cross-the-world/ssh-scp-ssh-pipelines@78e864b4890087a58248ff39320406971ca88b89
-      #  uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
-      #  with:
+        uses: cross-the-world/ssh-scp-ssh-pipelines@v1.1.4
+        with:
           # ssh remote host
-      #    host: ${{vars.SERVER_HOST}}
+          host: ${{vars.SERVER_HOST}}
           # ssh remote port
           #port: # optional, default is 22
           # ssh remote user
-      #    user: ${{vars.SERVER_USER}}
+          user: ${{vars.SERVER_USER}}
           # content of ssh private key. ex raw content of ~/.ssh/id_rsa
           #key: ${{secrets.PRIVATE_KEY}} # optional
           # ssh remote password
-      #    pass: ${{secrets.SERVER_PWD}} # optional
+          pass: ${{secrets.SERVER_PWD}} # optional
           # connection timeout to remote host
           #connect_timeout: # optional, default is 30s
           # execute pre-commands before scp
           #first_ssh: # optional
           # scp from local to remote
-      #    scp: |
-      #      './*' => /www/html/deploy-test/
+          scp: |
+            './apps/dodomogu.com/blog/.vitepress/dist/*' => /www/html/dodomogu-blog/
           # execute post-commands after scp
-      #    last_ssh: |
-      #      ls -al /www/html/deploy-test/
+          #last_ssh: |
+          #  ls -al /www/html/dodomogu-blog/
           
