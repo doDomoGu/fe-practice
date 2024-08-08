@@ -20,13 +20,13 @@ jobs:
           # Port for SCP
           #port: # optional, default is 22
           # IP Address or DNS of your target host
-          host: ${{ variables.SERVER_HOST }}    #阿里云的 ip
+          host: ${{ vars.SERVER_HOST }}    #阿里云的 ip
           # Source route folder
           origin: "./"
           # Destination route folder
           destination: "/www/html/deploy-test"       #被部署的服务器路径 
           # User for remote connection
-          username: ${{ variables.SERVER_USER }}    #阿里云用户
+          username: ${{ vars.SERVER_USER }}    #阿里云用户
           # Password for the user
           #password: # optional
           # Private SSH key
