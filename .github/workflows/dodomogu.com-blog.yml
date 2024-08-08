@@ -31,10 +31,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       
-      - name: Build blog
+      - name: Build && zip
         run: |
           pnpm -F @dodomogu/dodomogu.com-blog docs:build
-          ls -al ./apps/dodomogu.com-blog/.vitepress/dist
+          cd ./apps/dodomogu.com-blog/.vitepress
+          ls -al ./dist
+          tar -zcvf dist.tar.gz ./dist
           
       - name: ssh-scp-ssh-pipelines
         # You may pin to the exact commit or the version.
@@ -57,8 +59,10 @@ jobs:
           #first_ssh: # optional
           # scp from local to remote
           scp: |
-            './apps/dodomogu.com-blog/.vitepress/dist/*' => /www/html/dodomogu-blog/
+            './apps/dodomogu.com-blog/.vitepress/dist.tar.gz' => /www/html/dodomogu-blog/
           # execute post-commands after scp
-          #last_ssh: |
-          #  ls -al /www/html/dodomogu-blog/
+          last_ssh: |
+            cd /www/html/dodomogu-blog/
+            rm -rf dist
+            tar -zxvf dist.tar.gz
           
