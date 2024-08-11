@@ -331,6 +331,12 @@ importers:
       '@dodomogu/ui-vue':
         specifier: workspace:^
         version: link:../../libs/ui/vue
+      '@vueuse/core':
+        specifier: ^10.9.0
+        version: 10.11.0(vue@3.4.31(typescript@5.5.3))
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -541,6 +547,9 @@ importers:
 
   libs/ui/vue:
     dependencies:
+      '@vueuse/core':
+        specifier: ^10.9.0
+        version: 10.11.0(vue@3.4.31(typescript@5.5.3))
       radix-vue:
         specifier: ^1.9.3
         version: 1.9.3(vue@3.4.31(typescript@5.5.3))
@@ -3808,8 +3817,9 @@ packages:
     engines: {node: '>= 10.13.0'}
 
   glob@10.4.3:
-    resolution: {integrity: sha512-Q38SGlYRpVtDBPSWEylRyctn7uDeTp4NQERTLiCT1FqA9JXPYWqAVmQU6qh4r/zMM5ehxTcbaO8EjhWnvEhmyg==}
-    engines: {node: '>=18'}
+    resolution: {integrity: sha512-GwMlUF6PkPo3Gk21UxkCohOv0PLcIXVtKyLlpEI28R/cO/4eNOdmLk3CMW1wROV/WR/EsZOWAfBbBOqYvs88/w==, tarball: https://registry.npmmirror.com/glob/-/glob-10.4.2.tgz}
+    engines: {node: '>=16 || 14 >=14.18'}
+    deprecated: '[WARNING] Use 10.4.2 instead of 10.4.3, reason: https://github.com/isaacs/node-glob/issues/596'
     hasBin: true
 
   glob@7.2.3:
@@ -4271,8 +4281,9 @@ packages:
     engines: {node: '>= 4'}
 
   jackspeak@3.4.1:
-    resolution: {integrity: sha512-U23pQPDnmYybVkYjObcuYMk43VRlMLLqLI+RdZy8s8WV8WsxO9SnqSroKaluuvcNOdCAlauKszDwd+umbot5Mg==}
-    engines: {node: '>=18'}
+    resolution: {integrity: sha512-JVYhQnN59LVPFCEcVa2C3CrEKYacvjRfqIQl+h8oi91aLYQVWRYbxjPcv1bUiUy/kLmQaANrYfNMCO3kuEDHfw==, tarball: https://registry.npmmirror.com/jackspeak/-/jackspeak-3.4.0.tgz}
+    engines: {node: '>=14'}
+    deprecated: '[WARNING] Use 3.4.0 instead of 3.4.1, reason: https://github.com/isaacs/node-glob/issues/596'
 
   jake@10.9.1:
     resolution: {integrity: sha512-61btcOHNnLnsOdtLgA5efqQWjnSi/vow5HbI7HMdKKWqvrKR1bLK3BPlJn9gcSaP2ewuamUSMB5XEy76KUIS2w==}
@@ -4545,6 +4556,9 @@ packages:
   locate-path@7.2.0:
     resolution: {integrity: sha512-gvVijfZvn7R+2qyPX8mAuKcFGDf6Nc61GdvGafQsHL0sBIxfKzA+usWn4GFC/bk+QdwPUD4kWFJLhElipq+0VA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+
+  lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -11133,6 +11147,8 @@ snapshots:
   locate-path@7.2.0:
     dependencies:
       p-locate: 6.0.0
+
+  lodash-es@4.17.21: {}
 
   lodash.debounce@4.0.8: {}
 

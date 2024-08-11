@@ -1,4 +1,4 @@
-// import Balls from './ball.js'
+import { cloneDeep } from 'lodash-es'
 
 const STATUS = {
   PLAYING: Symbol('playing'), // 动画执行中
@@ -60,8 +60,17 @@ export default class Canvas {
   snapshot() {
     this.history.push({
       frame: this.frame,
-      sprites: JSON.parse(JSON.stringify(this.sprites))
+      // sprites: JSON.parse(JSON.stringify(this.sprites))
+      sprites: cloneDeep(this.sprites)
     })
+  }
+
+  paintHistory(frame) {
+    this.history
+      .find((h) => h.frame === frame)
+      .sprites.map((v) => {
+        v.paint(this.ctx)
+      })
   }
 
   start() {

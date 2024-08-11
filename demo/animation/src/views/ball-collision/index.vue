@@ -9,7 +9,7 @@ import Canvas from '@/models/2d/canvas'
 const balls = new Collection(Ball, 100) // 最多生成X个小球
 
 const canvasInstanceParams = {
-  duration: 6 // 动画执行时长 单位（秒）  -1: 一直执行下去
+  duration: 1 // 动画执行时长 单位（秒）  -1: 一直执行下去
 }
 const canvasRef = ref(null)
 
@@ -84,9 +84,11 @@ const sliderValue = ref([0])
 const handleUpdate = (v) => {
   console.log('handleUpdate', v)
   if (canvasInstance.value) {
-    console.log(v[0], canvasInstance.value.history[v[0]])
-    // canvasInstance.value.clear()
-    // canvasInstance.value.paint()
+    console.log(canvasInstance.value)
+    // 清空画布
+    canvasInstance.value.clear()
+    // 绘制历史
+    canvasInstance.value.paintHistory(v[0])
   }
 }
 // https://blog.csdn.net/liudonglovehemin/article/details/137507068
