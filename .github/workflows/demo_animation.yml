@@ -61,7 +61,7 @@ jobs:
           #first_ssh: # optional
           # scp from local to remote
           scp: |
-            './apps/demo/animation/dist.tar.gz' => /www/html/demo_animation
+            './demo/animation/dist.tar.gz' => /www/html/demo_animation
           # execute post-commands after scp
           last_ssh: |
             cd /www/html/demo_animation/
