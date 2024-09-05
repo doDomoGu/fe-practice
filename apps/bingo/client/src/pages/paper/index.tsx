@@ -1,16 +1,35 @@
-import { createRef, useState } from 'react'
+import { createRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import print from 'print-js'
 
+import request from '@/lib/request'
 import MySelect from '@/components/MySelect'
 import { Button } from '@/components/ui/button'
 
-import { selectItems } from './config'
+// import { selectItems } from './config'
 
-import Print from './Print'
-
+// import Print from './Print'
 const paper = () => {
-  const [selected, setSelected] = useState(selectItems[0].value)
+  // const [selected, setSelected] = useState(selectItems[0].value)
+  const [selected, setSelected] = useState('')
+  const [selectItems, setSelectItems] = useState([])
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await request.get('/init/get')
+
+      // console.log(result.data.data)
+
+      const data = result.data.data
+
+      const items = data.map((v: any) => ({
+        label: v.title,
+        value: v.id
+      }))
+      setSelectItems(items)
+      setSelected(items[0].value)
+    }
+    fetchData()
+  }, [])
 
   const printHandler = () => {
     window.open(`/#/paper/print/${selected}`, '_blank')
@@ -38,19 +57,19 @@ const paper = () => {
           value={selected}
           onChange={setSelected}
         />
-        {selected != '' && (
+        {/* {selected != '' && (
           <Button className="mt-4" onClick={printHandler}>
             打印游戏纸
           </Button>
-        )}
+        )} */}
       </div>
-      <div className="w-[1050px] h-[730px] text-white outline">
+      {/* <div className="w-[1050px] h-[730px] text-white outline">
         <iframe
           id="print-preview"
           src={`/#/paper/print/${selected}`}
           className="w-full h-full"
         ></iframe>
-      </div>
+      </div> */}
     </div>
   )
 }
