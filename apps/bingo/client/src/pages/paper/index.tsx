@@ -57,19 +57,19 @@ const paper = () => {
           value={selected}
           onChange={setSelected}
         />
-        {/* {selected != '' && (
+        {selected != '' && (
           <Button className="mt-4" onClick={printHandler}>
             打印游戏纸
           </Button>
-        )} */}
+        )}
       </div>
-      {/* <div className="w-[1050px] h-[730px] text-white outline">
+      <div className="w-[1050px] h-[730px] text-white outline">
         <iframe
           id="print-preview"
           src={`/#/paper/print/${selected}`}
           className="w-full h-full"
         ></iframe>
-      </div> */}
+      </div>
     </div>
   )
 }

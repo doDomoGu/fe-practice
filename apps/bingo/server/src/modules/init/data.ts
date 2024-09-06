@@ -1,6 +1,6 @@
 export default [
   {
-    id: 'Pokemon',
+    id: 'pokemon',
     title: '精灵宝可梦',
     cards: [
       {
@@ -106,7 +106,7 @@ export default [
     ]
   },
   {
-    id: 'Pony',
+    id: 'pony',
     title: '小马宝莉',
     cards: [
       {

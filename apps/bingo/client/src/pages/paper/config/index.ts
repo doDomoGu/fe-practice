@@ -14,7 +14,7 @@ export const selectItems = [
 ]
 
 const tableItems = new Map()
-tableItems.set('pokemon', [
+tableItems.set('Pokemon', [
   {
     id: 1,
     label: '小智'
