@@ -49,7 +49,7 @@ const paper = () => {
     // }
   }
   return (
-    <div className="p-10 ">
+    <div className="p-10">
       <div className="h-40 print:hidden">
         <MySelect
           items={selectItems}

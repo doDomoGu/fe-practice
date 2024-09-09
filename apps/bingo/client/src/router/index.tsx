@@ -1,6 +1,7 @@
 import React from 'react'
 import { Outlet, RouteObject } from 'react-router-dom'
 import Home from '@/pages/Home'
+import EditList from '@/pages/edit/List'
 import Paper from '@/pages/paper'
 import PaperPrint from '@/pages/paper/Print'
 // import FiftyTone from '@/pages/fifty-tone'
@@ -16,6 +17,11 @@ export const router: Array<MyRouter> = [
     path: '/',
     element: <Home />,
     title: 'BINGO'
+  },
+  {
+    path: '/edit',
+    element: <EditList />,
+    title: '编辑'
   },
   {
     path: '/paper',
