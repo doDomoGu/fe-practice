@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useThrottleFn } from '@vueuse/core'
 // import { SliderRange, SliderRoot, SliderThumb, SliderTrack } from 'radix-vue'
 import {
   SliderRange,
@@ -18,6 +19,18 @@ const emits = defineEmits(['update:modelValue'])
 const forward = useForwardPropsEmits(props, emits)
 
 // const sliderValue = ref([50])
+// const throttledFn = useThrottleFn((val) => {
+//   console.log('ui-ttt', val)
+//   emits('update:modelValue', val)
+// }, 1000)
+
+// const handleValueUpdate = (val) => {
+//   console.log('valueUpdate', val)
+// }
+
+// const handleValueCommit = (val) => {
+//   console.log('valueCommit', val)
+// }
 </script>
 
 <template>
@@ -29,7 +42,8 @@ const forward = useForwardPropsEmits(props, emits)
     
     :max="100"
     :step="1" -->
-
+  <!-- @update:modelValue="(val) => handleValueUpdate(val)" -->
+  <!-- @valueCommit="(val) => handleValueCommit(val)" -->
   <SliderRoot
     v-bind="forward"
     class="relative flex items-center select-none touch-none w-full h-4"
