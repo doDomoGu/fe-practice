@@ -40,6 +40,14 @@ export default ({ mode }) => {
             { text: '算法', link: '/learning-notes/algorithm/index' }
           ]
         },
+        {
+          text: '面试宝典',
+          items: [
+            {
+              text: 'HTML和CSS', link: '/interview-handbook/html-css'
+            }
+          ]
+        },
         { text: 'Examples', link: '/examples/markdown-examples' }
       ],
 
